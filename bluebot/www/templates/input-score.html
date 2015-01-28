@@ -1,0 +1,39 @@
+<ion-view view-title="How are you?">
+    <ion-content>
+        <form ng-submit="">
+        <div class="list">
+            <div class="item range range-positive">
+                <i class="icon ion-umbrella"></i>
+                <input type="range" name="score1" min="0" max="100" value="50">
+                <i class="icon icon-sun"></i>
+            </div>
+            
+            <div class="item range range-positive">
+                <i class="icon icon-wilt"></i>
+                <input type="range" name="score2" min="0" max="100" value="33">
+                <i class="icon icon-grow"></i>
+            </div>
+            
+            <div class="item range range-positive">
+                <i class="icon ion-flash"></i>
+                <input type="range" name="score3" min="0" max="100" value="70">
+                <i class="icon icon-wave"></i>
+            </div>
+            
+            <div class="item range range-positive">
+                <i class="icon icon-sleep"></i>
+                <input type="range" name="score4" min="0" max="100" value="25">
+                <i class="icon icon-light"></i>
+            </div>
+        </div>
+      <div class="row">
+          <span class="col col-10"></span>
+          <button class="button button-dark button-outline col col-20 button-icon ion-help" ng-click="help()"></button>
+          <span class="col col-10"></span>
+          <a class="button icon-right ion-chevron-right button-dark col col-50" type="submit">Submit</a>
+          <span class="col col-10"></span>
+      </div>
+    </div>
+    </form>
+  </ion-content>
+</ion-view>
