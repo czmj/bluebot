@@ -6,12 +6,12 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 $light:                           #ededed !default;
 $stable:                          #2d3e65 !default;
-$positive:                        #2d7bff !default;
-$calm:                            #11c1f3 !default;
+$positive:                        #0054e3 !default;
+$calm:                            #6f97de !default;
 $balanced:                        #00982b !default;
 $energized:                       #ff9d00 !default;
 $assertive:                       #d61d0e !default;
-$royal:                           #0348be !default;
+$royal:                           #0054e3 !default;
 $dark:                            #191f2c !default; 
 
 
@@ -20,6 +20,10 @@ $dark:                            #191f2c !default;
 
 $base-background-color:           $stable !default;
 $base-color:                      $light !default;
+$font-size-base:                  16px !default;
+$font-size-large:                 ($font-size-base * 1.25);
+$font-size-small:                 ($font-size-base * 0.75);
+
 
 // Links
 // -------------------------
@@ -38,8 +42,8 @@ $button-stable-text:              $light !default;
 $button-dark-active-bg:           darken($dark, 10%) !default;
 
 
-$button-energized-border:         darken($energized, 15%) !default;
-$button-energized-active-border:  darken($energized, 15%) !default;
+$button-energized-border:         darken($energized, 10%) !default;
+$button-energized-active-border:  darken($energized, 10%) !default;
 
 // Items
 // -------------------------------

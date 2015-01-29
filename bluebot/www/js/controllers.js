@@ -1,15 +1,16 @@
 angular.module('starter.controllers', [])
 
+
 .controller('AppCtrl', function($scope, $ionicModal) {
     
-  // Create the login modal that we will use later
+  // Create the help modal that we will use later
   $ionicModal.fromTemplateUrl('templates/help.html', {
     scope: $scope
   }).then(function(modal) {
     $scope.modal = modal;
   });
 
-  // Triggered in the login modal to close it
+  // Triggered in the help modal to close it
   $scope.closeHelpModal = function() {
     $scope.modal.hide();
   };
@@ -19,26 +20,108 @@ angular.module('starter.controllers', [])
     $scope.modal.remove();
   });
 
-  // Open the login modal
+  // Open the help modal
   $scope.help = function() {
     $scope.modal.show();
   };
 })
-
-.controller('goalslistsCtrl', function($scope) {
-  $scope.goalslists = [
-    { title: 'Goal 1', id: 1 },
-    { title: 'Goal 2', id: 2 },
-    { title: 'Goal 3', id: 3 },
-    { title: 'Goal 4', id: 4 },
-    { title: 'Goal 5', id: 5 }
-  ];
+.controller('StartCtrl', function($scope){
+        $scope.buttonType = "icon ion-help"
+            
+        $scope.click = function () {
+            $scope.buttonType = "icon ion-checkmark",
+                console.log('click');
+        };
 })
 
-.controller('goalslistCtrl', function($scope, $stateParams) {
+.controller('ScoresCtrl', function($scope, $localstorage){
+    $scope.submitScores = function () {
+        if(window.localStorage['points'] == null){
+                $localstorage.setObject('points', {
+                    goalscompleted: [],
+                    score1: [],
+                    score2: [],
+                    score3: [],
+                    score4: [],
+                    date:[]
+                })
+        };
+        
+        //TODO: stop two entries in one day
+        var date = new Date().toUTCString().slice(5, 16);
+        
+        var goals = Math.floor(Math.random()*6);
+        
+        var points=$localstorage.getObject('points');
+        
+        var slider1, slider2, slider3, slider4;
+        if($scope.range1==null){slider1=50}else{slider1=parseInt($scope.range1)};
+        if($scope.range2==null){slider2=50}else{slider2=parseInt($scope.range2)};
+        if($scope.range3==null){slider3=50}else{slider3=parseInt($scope.range3)};
+        if($scope.range4==null){slider4=50}else{slider4=parseInt($scope.range4)};
+        
+        $localstorage.setObject('points', {
+            goalscompleted: points.goalscompleted.concat(goals),
+            score1: points.score1.concat(slider1),
+            score2: points.score2.concat(slider2),
+            score3: points.score3.concat(slider3),
+            score4: points.score4.concat(slider4),
+            date: points.date.concat(date)
+        })
+        
+        //TODO: fix this hack
+        window.location.assign('#/app/graph');
+        location.reload();
+    };
+    
 })
 
-.controller('GraphCtrl', function ($scope) {
+.controller('GoalsCtrl', function($scope){
+    /*
+    $localstorage.setObject('goals', {
+        name: ['goal1','goal2','goal3','goal4','goal5'],
+        description: ['This is goal 1','This is goal 2','This is goal 3','This is goal 4','This is goal 5'],
+        //new Date().toISOString().slice(0, 10)
+        date:'2015-01-29'
+    });
+  
+  var goals = $localstorage.getObject('goals');
+  console.log(goals);
+  */
+})
+            
+
+.controller('GraphCtrl', function ($scope, $localstorage, $ionicModal, $timeout) {
+        
+          // Create the help modal that we will use later
+          $ionicModal.fromTemplateUrl('templates/start.html', {
+            scope: $scope
+          }).then(function(modal) {
+            $scope.modal = modal;
+          });
+          // Triggered in the help modal to close it
+          $scope.closeNoDataModal = function() {
+            window.location.assign('#/app/input-score');
+            $scope.modal.hide();
+          };
+
+          //Cleanup the modal when we're done with it!
+          $scope.$on('$destroy', function() {
+            $scope.modal.remove();
+          });
+    
+            $scope.nodata = function() {
+                $scope.modal.show();
+            };
+        
+    
+          $timeout(function($scope){
+              if(window.localStorage['points'] == null){
+              // Open the help modal
+                    //$scope.modal.show();
+            }
+          })
+    
 
     $scope.showSeriesToggle = function (seriesNum) {
         var seriesArray = $scope.highchartsNG.series;
@@ -47,71 +130,85 @@ angular.module('starter.controllers', [])
         }else{
             seriesArray[seriesNum].visible=true;
         }
+        
     }
     
     $scope.highchartsNG = {
         options: {
-            colors: ['#191f2c', '#ff9d00', '#2d7bff','#0348be', '#00982b'],
+            colors: ['#191f2c', '#ff9d00', '#00982b','#6f97de', '#0054e3'],
             chart: {
                 backgroundColor: '#2d3e65',
+                
             },
-            legend: {
-                enabled: false,
-            },
-        },
-        title: {
-          text: null
+            title:null,
+            legend: {enabled: false},
         },
         xAxis: {
-		gridLineColor: '#333333',
+		gridLineColor: '#2d3e65',
 		gridLineWidth: 1,
 		labels: {
+            maxStaggerLines:1,
+            overflow: 'justify',
 			style: {
 				color: '#A0A0A0'
 			}
-		},
-		lineColor: '#A0A0A0',
-		tickColor: '#A0A0A0',
-	},
-	yAxis: {
-		gridLineColor: '#333333',
-		labels: {
-			style: {
-				color: '#A0A0A0'
-			}
-		},
-		lineColor: '#A0A0A0',
-		minorTickInterval: null,
-		tickColor: '#A0A0A0',
-		tickWidth: 1,
-		title: null
-	},
-    series: [{
+		},           
+        categories: []
+	   },
+        yAxis: [{ // Primary yAxis
+            title: 'Goals completed',
+            gridLineColor: '#2d3e65',
+        }, { // Secondary yAxis
+            gridLineColor: '#333333',
+            labels: {enabled:false},
+            title: 'Goals completed',
+            opposite: true,
+        }],
+        tooltip: {
+            formatter: function () {
+    		  //  return '';
+                this.x + ': ' + this.y;
+            }
+        },
+        
+        series: [{
             name: 'Goals completed',
-            data: [12, 13, 14, 13, 15, 8, 9, 5],
             type: "bar",
-            borderWidth:'0',
+            borderWidth:'0'
         },{
             name: '1',
-            data: [4, 5, 8, 7, 6, 7, 8, 9],
             type: 'spline',
-            visible:true
+            visible:true,
+            yAxis: 1
         },{
             name: '2',
-            data: [3, 5, 6, 5, 4, 5, 6, 7],
             type: 'spline',
-            visible:true
+            visible:false,
+            yAxis: 1
         },{
             name: '3',
-            data: [8, 7, 5, 7.0, 8, 9, 9, 10],
             type: 'spline',
-            visible:false
+            visible:false,
+            yAxis: 1
         }, {
             name: '4',
-            data: [12, 9, 7.0, 6.6, 5, 6, 7, 8],
             type: 'spline',
-            visible:false
+            visible:false,
+            yAxis: 1
         }]
-    };             
+    };
+    
+        var points = $localstorage.getObject('points');
+        var seriesArray = $scope.highchartsNG.series
+        seriesArray[0].data = points.goalscompleted;
+        seriesArray[1].data = points.score1;
+        seriesArray[2].data = points.score2;
+        seriesArray[3].data = points.score3;
+        seriesArray[4].data = points.score4;
+
+        var xAxisArray = $scope.highchartsNG.xAxis
+        xAxisArray.categories=points.date;
+
+      
 });
 

@@ -5,7 +5,30 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'highcharts-ng'])
+
+//localstorage
+angular.module('ionic.utils', [])
+
+.factory('$localstorage', ['$window', function($window) {
+  return {
+    set: function(key, value) {
+      $window.localStorage[key] = value;
+    },
+    get: function(key, defaultValue) {
+      return $window.localStorage[key] || defaultValue;
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key) {
+      return JSON.parse($window.localStorage[key] || '{}');
+    }
+  }
+}])
+
+
+//add requires here
+angular.module('starter', ['ionic', 'starter.controllers', 'highcharts-ng', 'ionic.utils'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -20,6 +43,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'highcharts-ng'])
     }
   });
 })
+
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -63,25 +87,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'highcharts-ng'])
     views: {
       'menuContent': {
         templateUrl: "templates/settings.html"
-      }
-    }
-  })
-    .state('app.goalslists', {
-      url: "/goalslists",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/goalslists.html",
-          controller: 'goalslistsCtrl'
-        }
-      }
-    })
-
-  .state('app.single', {
-    url: "/goalslists/:goalslistId",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/goalslist.html",
-        controller: 'goalslistCtrl'
       }
     }
   });

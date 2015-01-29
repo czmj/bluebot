@@ -1,13 +1,20 @@
 <ion-view title="Graph">
   <ion-content>
-        <div ng-controller="GraphCtrl">
+        <div ng-controller="GraphCtrl" data-ng-init="insertdata()">
             <highchart id="chart1" config="highchartsNG"></highchart>
-            <p class="padding">Click to show/hide:</p>
+            <a class="button button-dark button-outline col col-20 button-icon ion-help" ng-click="nodata()"></a>
+            <p class="padding-left padding-top text-center">Click to show/hide:</p>
+            
             <!--TODO: add icons and change the buttons to outlines when related series is invisible-->
-                <button class="button button-energized ion-help" ng-click="showSeriesToggle(1)"></button>
-                <button class="button button-positive ion-help" ng-click="showSeriesToggle(2)"></button>
-                <button class="button button-royal ion-help" ng-click="showSeriesToggle(3)"></button>
-                <button class="button button-balanced ion-help" ng-click="showSeriesToggle(4)"></button>
+            <div class="row padding-left padding-right">
+                <button ng-class="{'col-25 button button-energized': !active1, 'col-25 button button-energized button-outline': active1}" ng-click="showSeriesToggle(1);active1=!active1"><i class="icon icon-sun"></i></button>
+                <button ng-class="{'col-25 button button-balanced button-outline': !active2, 'col-25 button button-balanced': active2}" ng-click="showSeriesToggle(2);active2=!active2"><i class="icon icon-grow"></i></button>
+                <button ng-class="{'col-25 button button-calm button-outline': !active3, 'col-25 button button-calm': active3}" ng-click="showSeriesToggle(3);active3=!active3"><i class="icon icon-wave"></i></button>
+                <button ng-class="{'col-25 button button-royal button-outline': !active4, 'col-25 button button-royal': active4}" ng-click="showSeriesToggle(4);active4=!active4"><i class="icon icon-light"></i></button>
+                
+                
+            </div>
         </div>
   </ion-content>
 </ion-view>
+    
