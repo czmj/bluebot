@@ -31,9 +31,6 @@ angular.module('starter.controllers', [])
   $timeout($scope.start, 500);
 })
 
-//change question mark to a tick on first modal
-.controller('StartCtrl', function($scope){
-})
 
 .controller('ScoresCtrl', function($scope, $localstorage, $ionicModal){
         
@@ -74,7 +71,7 @@ angular.module('starter.controllers', [])
         //TODO: stop two entries in one day
         var date = new Date().toUTCString().slice(5, 16);
         
-        var goals = Math.floor(Math.random()*6);
+        var goals = Math.floor(Math.random()*4);
         
         var points=$localstorage.getObject('points');
         
@@ -137,6 +134,35 @@ angular.module('starter.controllers', [])
   $scope.help = function() {
     $scope.modal.show();
   };
+    
+    
+        
+ // Create the help modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/start2.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+    
+  // Triggered in the help modal to close it
+  $scope.closeNoGoalsModal = function() {
+    window.location.assign('#/app/choose-goals');
+    $scope.modal.hide();
+  };
+    
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+  });
+  $scope.start = function() {
+      if(window.localStorage['points'] != null && window.localStorage['goals'] == null){
+              // Open the help modal
+                $scope.modal.show();
+                  
+            }
+  };        
+  $timeout($scope.start, 500);
+
     
     $scope.showSeriesToggle = function (seriesNum) {
         var seriesArray = $scope.highchartsNG.series;

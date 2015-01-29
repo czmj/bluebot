@@ -72,6 +72,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'highcharts-ng', 'ion
       }
     }
   })
+    .state('app.choose-goals', {
+    url: "/choose-goals",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/choose-goals.html"
+      }
+    }
+  })
   
     .state('app.about', {
     url: "/about",

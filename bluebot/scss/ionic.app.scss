@@ -29,7 +29,10 @@ $font-size-small:                 ($font-size-base * 0.75);
 // -------------------------
 a {
     color:                      $energized;
-    text-decoration: none;
+    text-decoration: underline;
+}
+strong{
+    color:                      saturate(lighten($energized,10%),40%);
 }
 
 // Buttons

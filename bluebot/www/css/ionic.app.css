@@ -1,6 +1,10 @@
 a {
   color: #ff9d00;
-  text-decoration: none; }
+  text-decoration: underline;
+  font-weight: bold; }
+
+strong {
+  color: #ffb60a; }
 
 .menu-left .item {
   border-color: #191f2c; }
