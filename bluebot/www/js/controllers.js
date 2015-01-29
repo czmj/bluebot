@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 
-.controller('AppCtrl', function($scope, $ionicModal) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
     
   // Create the help modal that we will use later
   $ionicModal.fromTemplateUrl('templates/help.html', {
@@ -24,10 +24,40 @@ angular.module('starter.controllers', [])
   $scope.help = function() {
     $scope.modal.show();
   };
+    
+        
+ // Create the help modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/start.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+    
+  // Triggered in the help modal to close it
+  $scope.closeNoDataModal = function() {
+    window.location.assign('#/app/input-score');
+    $scope.modal.hide();
+  };
+    
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+  });
+  $scope.start = function() {
+      if(window.localStorage['points'] == null){
+              // Open the help modal
+                  console.log('hello!')
+                $scope.modal.show();
+                  
+            }
+  };        
+  $timeout($scope.start, 300);
+    
 })
+
+//change question mark to a tick on first modal
 .controller('StartCtrl', function($scope){
-        $scope.buttonType = "icon ion-help"
-            
+        $scope.buttonType = "icon ion-help"    
         $scope.click = function () {
             $scope.buttonType = "icon ion-checkmark",
                 console.log('click');
@@ -92,36 +122,6 @@ angular.module('starter.controllers', [])
             
 
 .controller('GraphCtrl', function ($scope, $localstorage, $ionicModal, $timeout) {
-        
-          // Create the help modal that we will use later
-          $ionicModal.fromTemplateUrl('templates/start.html', {
-            scope: $scope
-          }).then(function(modal) {
-            $scope.modal = modal;
-          });
-          // Triggered in the help modal to close it
-          $scope.closeNoDataModal = function() {
-            window.location.assign('#/app/input-score');
-            $scope.modal.hide();
-          };
-
-          //Cleanup the modal when we're done with it!
-          $scope.$on('$destroy', function() {
-            $scope.modal.remove();
-          });
-    
-            $scope.nodata = function() {
-                $scope.modal.show();
-            };
-        
-    
-          $timeout(function($scope){
-              if(window.localStorage['points'] == null){
-              // Open the help modal
-                    //$scope.modal.show();
-            }
-          })
-    
 
     $scope.showSeriesToggle = function (seriesNum) {
         var seriesArray = $scope.highchartsNG.series;

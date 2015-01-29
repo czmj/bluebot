@@ -2,10 +2,8 @@
   <ion-content>
         <div ng-controller="GraphCtrl" data-ng-init="insertdata()">
             <highchart id="chart1" config="highchartsNG"></highchart>
-            <a class="button button-dark button-outline col col-20 button-icon ion-help" ng-click="nodata()"></a>
             <p class="padding-left padding-top text-center">Click to show/hide:</p>
             
-            <!--TODO: add icons and change the buttons to outlines when related series is invisible-->
             <div class="row padding-left padding-right">
                 <button ng-class="{'col-25 button button-energized': !active1, 'col-25 button button-energized button-outline': active1}" ng-click="showSeriesToggle(1);active1=!active1"><i class="icon icon-sun"></i></button>
                 <button ng-class="{'col-25 button button-balanced button-outline': !active2, 'col-25 button button-balanced': active2}" ng-click="showSeriesToggle(2);active2=!active2"><i class="icon icon-grow"></i></button>

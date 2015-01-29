@@ -2813,14 +2813,14 @@ a.subdued {
     .bar.bar-balanced.bar-footer {
       background-image: linear-gradient(180deg, #00651b, #0043b0 50%, transparent 50%); }
   .bar.bar-energized {
-    border-color: #b36b00;
+    border-color: #cc7a00;
     background-color: #ff9d00;
-    background-image: linear-gradient(0deg, #b36b00, #b36b00 50%, transparent 50%);
+    background-image: linear-gradient(0deg, #cc7a00, #cc7a00 50%, transparent 50%);
     color: #191f2c; }
     .bar.bar-energized .title {
       color: #191f2c; }
     .bar.bar-energized.bar-footer {
-      background-image: linear-gradient(180deg, #b36b00, #b36b00 50%, transparent 50%); }
+      background-image: linear-gradient(180deg, #cc7a00, #cc7a00 50%, transparent 50%); }
   .bar.bar-royal {
     border-color: #0047ba;
     background-color: #0054e3;
@@ -3042,14 +3042,14 @@ a.subdued {
     background: none; }
 
 .bar-energized .button {
-  border-color: #b36b00;
+  border-color: #cc7a00;
   background-color: #ff9d00;
   color: #191f2c; }
   .bar-energized .button:hover {
     color: #191f2c;
     text-decoration: none; }
   .bar-energized .button.active, .bar-energized .button.activated {
-    border-color: #b36b00;
+    border-color: #cc7a00;
     background-color: #e68a00;
     box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1); }
   .bar-energized .button.button-clear {
@@ -3250,9 +3250,9 @@ a.subdued {
     color: #00982b; }
 
 .tabs-energized > .tabs, .tabs.tabs-energized {
-  border-color: #b36b00;
+  border-color: #cc7a00;
   background-color: #ff9d00;
-  background-image: linear-gradient(0deg, #b36b00, #b36b00 50%, transparent 50%);
+  background-image: linear-gradient(0deg, #cc7a00, #cc7a00 50%, transparent 50%);
   color: #191f2c; }
   .tabs-energized > .tabs .tab-item .badge, .tabs.tabs-energized .tab-item .badge {
     background-color: #191f2c;
@@ -3602,8 +3602,8 @@ a.subdued {
 
 .tabs-background-energized .tabs, .tabs-background-energized > .tabs {
   background-color: #ff9d00;
-  background-image: linear-gradient(0deg, #b36b00, #b36b00 50%, transparent 50%);
-  border-color: #b36b00; }
+  background-image: linear-gradient(0deg, #cc7a00, #cc7a00 50%, transparent 50%);
+  border-color: #cc7a00; }
 
 .tabs-background-royal .tabs, .tabs-background-royal > .tabs {
   background-color: #0054e3;
@@ -4367,7 +4367,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
     background-color: #00982b;
     color: #fff; }
   .item.item-energized {
-    border-color: #b36b00;
+    border-color: #cc7a00;
     background-color: #ff9d00;
     color: #191f2c; }
   .item.item-royal {
@@ -4406,7 +4406,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
     border-color: #00651b;
     background-color: #00651b; }
   .item.active.item-energized, .item.activated.item-energized, .item-complex.active .item-content.item-energized, .item-complex.activated .item-content.item-energized, .item .item-content.active.item-energized, .item .item-content.activated.item-energized {
-    border-color: #b36b00;
+    border-color: #cc7a00;
     background-color: #e68a00; }
   .item.active.item-royal, .item.activated.item-royal, .item-complex.active .item-content.item-royal, .item-complex.activated .item-content.item-royal, .item .item-content.active.item-royal, .item .item-content.activated.item-royal {
     border-color: #0047ba;
@@ -4501,11 +4501,11 @@ a.item-content {
     border-color: #00651b;
     background-color: #00651b; }
 .item-complex.item-energized > .item-content {
-  border-color: #b36b00;
+  border-color: #cc7a00;
   background-color: #ff9d00;
   color: #191f2c; }
   .item-complex.item-energized > .item-content.active, .item-complex.item-energized > .item-content:active {
-    border-color: #b36b00;
+    border-color: #cc7a00;
     background-color: #e68a00; }
 .item-complex.item-royal > .item-content {
   border-color: #0047ba;
@@ -6140,14 +6140,14 @@ progress {
         box-shadow: none;
         color: #fff; }
   .button.button-energized {
-    border-color: #b36b00;
+    border-color: #cc7a00;
     background-color: #ff9d00;
     color: #191f2c; }
     .button.button-energized:hover {
       color: #191f2c;
       text-decoration: none; }
     .button.button-energized.active, .button.button-energized.activated {
-      border-color: #b36b00;
+      border-color: #cc7a00;
       background-color: #e68a00;
       box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1); }
     .button.button-energized.button-clear {
@@ -6839,7 +6839,7 @@ a.button {
   background-color: #ff9d00; }
 
 .energized-border {
-  border-color: #b36b00; }
+  border-color: #cc7a00; }
 
 .royal, a.royal {
   color: #0054e3; }
