@@ -1,8 +1,13 @@
 <ion-view title="Graph">
   <ion-content>
         <div ng-controller="GraphCtrl">
-            <highchart config="chart"></highchart>
-            <button id="button" class="autocompare">Hide series</button>
+            <highchart id="chart1" config="highchartsNG"></highchart>
+            <p class="padding">Click to show/hide:</p>
+            <!--TODO: add icons and change the buttons to outlines when related series is invisible-->
+                <button class="button button-energized ion-help" ng-click="showSeriesToggle(1)"></button>
+                <button class="button button-positive ion-help" ng-click="showSeriesToggle(2)"></button>
+                <button class="button button-royal ion-help" ng-click="showSeriesToggle(3)"></button>
+                <button class="button button-balanced ion-help" ng-click="showSeriesToggle(4)"></button>
         </div>
   </ion-content>
 </ion-view>

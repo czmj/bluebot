@@ -40,21 +40,29 @@ angular.module('starter.controllers', [])
 
 .controller('GraphCtrl', function ($scope) {
 
-  $scope.chart = {
-    options: {
-        colors: ['#191f2c', '#ff9d00', '#2d7bff', '#00982b','#0348be'],
-        chart: {
-            backgroundColor: '#2d3e65',
-        },
-        legend: {
-            enabled: false,
-        },
-    },
-    title: {
-      text: null
-    },
+    $scope.showSeriesToggle = function (seriesNum) {
+        var seriesArray = $scope.highchartsNG.series;
+        if (seriesArray[seriesNum].visible){
+            seriesArray[seriesNum].visible=false;
+        }else{
+            seriesArray[seriesNum].visible=true;
+        }
+    }
     
-	xAxis: {
+    $scope.highchartsNG = {
+        options: {
+            colors: ['#191f2c', '#ff9d00', '#2d7bff','#0348be', '#00982b'],
+            chart: {
+                backgroundColor: '#2d3e65',
+            },
+            legend: {
+                enabled: false,
+            },
+        },
+        title: {
+          text: null
+        },
+        xAxis: {
 		gridLineColor: '#333333',
 		gridLineWidth: 1,
 		labels: {
@@ -84,25 +92,26 @@ angular.module('starter.controllers', [])
             type: "bar",
             borderWidth:'0',
         },{
-            name: 'score1',
+            name: '1',
             data: [4, 5, 8, 7, 6, 7, 8, 9],
-            type: 'spline'
+            type: 'spline',
+            visible:true
         },{
-            name: 'score2',
+            name: '2',
             data: [3, 5, 6, 5, 4, 5, 6, 7],
             type: 'spline',
-        }, 
-        /*{
-            name: 'score3',
+            visible:true
+        },{
+            name: '3',
             data: [8, 7, 5, 7.0, 8, 9, 9, 10],
-            type: 'spline'
+            type: 'spline',
+            visible:false
         }, {
-            name: 'score4',
+            name: '4',
             data: [12, 9, 7.0, 6.6, 5, 6, 7, 8],
-            type: 'spline'
-        }*/
-        ]
-    };
-             
+            type: 'spline',
+            visible:false
+        }]
+    };             
 });
 
