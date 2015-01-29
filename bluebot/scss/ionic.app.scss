@@ -24,7 +24,6 @@ $font-size-base:                  16px !default;
 $font-size-large:                 ($font-size-base * 1.25);
 $font-size-small:                 ($font-size-base * 0.75);
 
-
 // Links
 // -------------------------
 a {
@@ -47,6 +46,9 @@ $button-dark-active-bg:           darken($dark, 10%) !default;
 
 $button-energized-border:         darken($energized, 10%) !default;
 $button-energized-active-border:  darken($energized, 10%) !default;
+
+// Checkboxes
+// -------------------------------
 
 // Items
 // -------------------------------

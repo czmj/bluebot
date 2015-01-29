@@ -97,43 +97,29 @@ angular.module('starter.controllers', [])
     
 })
 
-.controller('GoalsCtrl', function($scope){
-    /*
-    $localstorage.setObject('goals', {
-        name: ['goal1','goal2','goal3','goal4','goal5'],
-        description: ['This is goal 1','This is goal 2','This is goal 3','This is goal 4','This is goal 5'],
-        //new Date().toISOString().slice(0, 10)
-        date:'2015-01-29'
-    });
-  
-  var goals = $localstorage.getObject('goals');
-  console.log(goals);
-  */
+.controller('GoalsCtrl', function($scope, $localstorage){
+       /*if(window.localStorage['fullgoallist'] == null){
+               $localstorage.setObject('fullgoallist', {
+                    id:[0,1,2,3,4,5],
+                    name:['Get out of bed', 'Have a shower', 'Go outside', 'Eat a healthy meal', 'Take a 10 minutes walk or jog'],
+                    description:['a','b','c','d','e'],
+                    category:[]
+                })
+        */
+      var goals = $localstorage.getObject('fullgoallist');
+    
+    //TODO: how can I automate this?
+      $scope.goalList = [
+            { text: goals.name[0], checked: false },
+            { text: goals.name[1], checked: false },
+            { text: goals.name[2], checked: false },
+            { text: goals.name[3], checked: false },
+            { text: goals.name[4], checked: false }
+          ]
 })
-            
 
 .controller('GraphCtrl', function ($scope, $localstorage, $ionicModal, $timeout) {
-    // Create the help modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/help.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the help modal to close it
-  $scope.closeHelpModal = function() {
-    $scope.modal.hide();
-  };
-
-  //Cleanup the modal when we're done with it!
-  $scope.$on('$destroy', function() {
-    $scope.modal.remove();
-  });
-
-  // Open the help modal
-  $scope.help = function() {
-    $scope.modal.show();
-  };
+    
     
     
         
@@ -162,6 +148,28 @@ angular.module('starter.controllers', [])
             }
   };        
   $timeout($scope.start, 500);
+    
+    // Create the help modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/help.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+  // Triggered in the help modal to close it
+  $scope.closeHelpModal = function() {
+    $scope.modal.hide();
+  };
+
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+
+  // Open the help modal
+  $scope.help = function() {
+    $scope.modal.show();
+  };
 
     
     $scope.showSeriesToggle = function (seriesNum) {

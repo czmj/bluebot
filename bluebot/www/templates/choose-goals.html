@@ -1,11 +1,17 @@
 <ion-view view-title="Choose 3 goals:">
     <ion-content>
-        <div>
-            <form>
+        <div ng-controller="GoalsCtrl">
+            <div class="list">
+                
+                <ion-checkbox   ng-repeat="item in goalList"
+                                ng-model="item.checked" 
+                                ng-checked="item.checked">
+                  {{ item.text }}
+                </ion-checkbox>
+        
                 <div class="row padding">
-                    <button class="button icon-right ion-chevron-right button-energized col col-offset-50" type="submit">Submit</button>
+                    <button ng-click="submitGoals()" class="button icon-right ion-chevron-right button-energized col col-offset-50" type="submit">Submit</button>
                 </div>
-            </form>
         </div>
     </ion-content>
 </ion-view>
