@@ -42,35 +42,67 @@ angular.module('starter.controllers', [])
 
   $scope.chart = {
     options: {
-      chart: {
-        type: 'line'
-      },
-      legend: {
-        enabled: false
-      }
+        colors: ['#191f2c', '#ff9d00', '#2d7bff', '#00982b','#0348be'],
+        chart: {
+            backgroundColor: '#2d3e65',
+        },
+        legend: {
+            enabled: false,
+        },
     },
     title: {
-      text: "Hello World"
+      text: null
     },
-    yAxis: {
-      title: null
-    },
-    xAxis: {
-      type: 'datetime'
-    },
+    
+	xAxis: {
+		gridLineColor: '#333333',
+		gridLineWidth: 1,
+		labels: {
+			style: {
+				color: '#A0A0A0'
+			}
+		},
+		lineColor: '#A0A0A0',
+		tickColor: '#A0A0A0',
+	},
+	yAxis: {
+		gridLineColor: '#333333',
+		labels: {
+			style: {
+				color: '#A0A0A0'
+			}
+		},
+		lineColor: '#A0A0A0',
+		minorTickInterval: null,
+		tickColor: '#A0A0A0',
+		tickWidth: 1,
+		title: null
+	},
     series: [{
-            name: 'Tokyo',
-            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+            name: 'Goals completed',
+            data: [12, 13, 14, 13, 15, 8, 9, 5],
+            type: "bar",
+            borderWidth:'0',
+        },{
+            name: 'score1',
+            data: [4, 5, 8, 7, 6, 7, 8, 9],
+            type: 'spline'
+        },{
+            name: 'score2',
+            data: [3, 5, 6, 5, 4, 5, 6, 7],
+            type: 'spline',
+        }, 
+        /*{
+            name: 'score3',
+            data: [8, 7, 5, 7.0, 8, 9, 9, 10],
+            type: 'spline'
         }, {
-            name: 'New York',
-            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-        }, {
-            name: 'Berlin',
-            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
-        }, {
-            name: 'London',
-            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-        }]
-  };
+            name: 'score4',
+            data: [12, 9, 7.0, 6.6, 5, 6, 7, 8],
+            type: 'spline'
+        }*/
+        ]
+    };
+             
 });
 

@@ -6,13 +6,13 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 $light:                           #fff !default;
 $stable:                          #2d3e65 !default;
-$positive:                        #387ef5 !default;
+$positive:                        #2d7bff !default;
 $calm:                            #11c1f3 !default;
 $balanced:                        #00982b !default;
 $energized:                       #ff9d00 !default;
 $assertive:                       #d61d0e !default;
 $royal:                           #886aea !default;
-$dark:                            #191f2c !default;
+$dark:                            #191f2c !default; 
 
 
 // Base
@@ -77,13 +77,16 @@ $modal-bg-color:                  $stable !default;
 // Range
 // -------------------------------
 
-$range-default-track-bg:          $positive !default;
+$range-default-track-bg:          $dark !default;
 $range-slider-width:              20px !default;
 $range-slider-height:             20px !default;
 
 .range .icon {
   margin-right: 10px !important;
   margin-left: 10px !important;
+}
+input[type=range]::-webkit-slider-thumb {
+    background: $dark !important;
 }
 
 // Include all of Ionic
