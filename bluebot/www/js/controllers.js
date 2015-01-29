@@ -116,7 +116,28 @@ angular.module('starter.controllers', [])
             
 
 .controller('GraphCtrl', function ($scope, $localstorage, $ionicModal, $timeout) {
+    // Create the help modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/help.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
 
+  // Triggered in the help modal to close it
+  $scope.closeHelpModal = function() {
+    $scope.modal.hide();
+  };
+
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+
+  // Open the help modal
+  $scope.help = function() {
+    $scope.modal.show();
+  };
+    
     $scope.showSeriesToggle = function (seriesNum) {
         var seriesArray = $scope.highchartsNG.series;
         if (seriesArray[seriesNum].visible){
