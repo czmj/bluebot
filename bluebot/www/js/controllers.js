@@ -1,57 +1,29 @@
 angular.module('starter.controllers', [])
 
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
-    
-        
- // Create the help modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/start.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-    
-  // Triggered in the help modal to close it
-  $scope.closeNoDataModal = function() {
-    window.location.assign('#/app/input-score');
-    $scope.modal.hide();
-  };
-    
-  //Cleanup the modal when we're done with it!
-  $scope.$on('$destroy', function() {
-      $scope.modal.remove();
-  });
-  $scope.start = function() {
-      if(window.localStorage['points'] == null){
-              // Open the help modal
-                $scope.modal.show();
-                  
-            }
-  };        
-  $timeout($scope.start, 500);
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $localstorage) {
 })
+    
 
 
 .controller('ScoresCtrl', function($scope, $localstorage, $ionicModal){
-        
-  // Create the help modal that we will use later
+    //have succesfully got to the input page! (somehow)
+    if(window.localStorage['tutorial']==null || window.localStorage['tutorial']==0) $localstorage.setObject('tutorial',1);
+    
+  // hints help modal
   $ionicModal.fromTemplateUrl('templates/help.html', {
     scope: $scope
   }).then(function(modal) {
     $scope.modal = modal;
   });
-
-  // Triggered in the help modal to close it
-  $scope.closeHelpModal = function() {
-    $scope.modal.hide();
+    
+  $scope.closeModal = function(index) {
+    if (index==1) $scope.modal.hide();
   };
-
-  //Cleanup the modal when we're done with it!
   $scope.$on('$destroy', function() {
     $scope.modal.remove();
   });
 
-  // Open the help modal
   $scope.help = function() {
     $scope.modal.show();
   };
@@ -98,80 +70,91 @@ angular.module('starter.controllers', [])
 })
 
 .controller('GoalsCtrl', function($scope, $localstorage){
-       /*if(window.localStorage['fullgoallist'] == null){
-               $localstorage.setObject('fullgoallist', {
-                    id:[0,1,2,3,4,5],
-                    name:['Get out of bed', 'Have a shower', 'Go outside', 'Eat a healthy meal', 'Take a 10 minutes walk or jog'],
-                    description:['a','b','c','d','e'],
-                    category:[]
-                })
-        */
-      var goals = $localstorage.getObject('fullgoallist');
-    
-    //TODO: how can I automate this?
-      $scope.goalList = [
-            { text: goals.name[0], checked: false },
-            { text: goals.name[1], checked: false },
-            { text: goals.name[2], checked: false },
-            { text: goals.name[3], checked: false },
-            { text: goals.name[4], checked: false }
-          ]
 })
 
 .controller('GraphCtrl', function ($scope, $localstorage, $ionicModal, $timeout) {
+
     
+    // help modal
+    $ionicModal.fromTemplateUrl('templates/help.html', {
+      id: '1', // id is referenced by openModal()
+      scope: $scope,
+      backdropClickToClose: false,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.help = modal;
+    });
     
+    // tutorial modal 1
+    $ionicModal.fromTemplateUrl('templates/start.html', {
+      id: '2',
+      scope: $scope,
+      backdropClickToClose: false,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.start = modal;
+    });
     
+    // tutorial modal 2
+    $ionicModal.fromTemplateUrl('templates/start2.html', {
+      id: '3',
+      scope: $scope,
+      backdropClickToClose: false,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.start2 = modal;
+    });
+
+    $scope.openModal = function(index) {
+        if(index == 1) $scope.help.show();
+        else if (window.localStorage['tutorial'] == null || window.localStorage['tutorial'] == 0) $scope.start.show();
+        else if (window.localStorage['tutorial'] == 1) $scope.start2.show();
+    };
+    
+    $scope.closeModal = function(index) {
+        console.log(index)
+        if(index == 1){ 
+            $scope.help.hide()
+        }else if (index = 2){
+            //submit on start1
+            $scope.start.hide();
+            window.location.assign('#/app/input-score');
+            $localstorage.setObject('tutorial',1);
+        }else if (index==3){
+            //submit on start2
+            //TODO: there's a bug here - index is correct but nothing below here is running - seems to be running index==2 instead
+            $scope.start2.hide();
+            //console.log('hidden')
+            window.location.assign('#/app/choose-goals');
+            //console.log('window assigned')
+            $localstorage.setObject('tutorial',9);
+        }
+    }
         
- // Create the help modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/start2.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-    
-  // Triggered in the help modal to close it
-  $scope.closeNoGoalsModal = function() {
-    window.location.assign('#/app/choose-goals');
-    $scope.modal.hide();
-  };
-    
-  //Cleanup the modal when we're done with it!
-  $scope.$on('$destroy', function() {
-      $scope.modal.remove();
-  });
-  $scope.start = function() {
-      if(window.localStorage['points'] != null && window.localStorage['goals'] == null){
-              // Open the help modal
-                $scope.modal.show();
-                  
+    $scope.skip = function(index) {   
+             if(index==1){
+                $scope.start.hide();
+                $localstorage.setObject('tutorial',9)
+            }else if(index==2){
+                $scope.start2.hide();
+                $localstorage.setObject('tutorial',9)
             }
-  };        
-  $timeout($scope.start, 500);
-    
-    // Create the help modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/help.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the help modal to close it
-  $scope.closeHelpModal = function() {
-    $scope.modal.hide();
-  };
-
-  //Cleanup the modal when we're done with it!
-  $scope.$on('$destroy', function() {
-    $scope.modal.remove();
-  });
-
-  // Open the help modal
-  $scope.help = function() {
-    $scope.modal.show();
-  };
+        }
 
     
+    // Cleanup the modals when we're done with them (i.e: state change)
+    // Angular will broadcast a $destroy event just before tearing down a scope 
+    // and removing the scope from its parent.
+    $scope.$on('$destroy', function() {
+      $scope.help.remove();
+      $scope.start.remove();
+      $scope.start2.remove();
+
+    })
+
+            
+  $timeout($scope.openModal, 800);
+  
     $scope.showSeriesToggle = function (seriesNum) {
         var seriesArray = $scope.highchartsNG.series;
         if (seriesArray[seriesNum].visible){
@@ -187,7 +170,7 @@ angular.module('starter.controllers', [])
             colors: ['#191f2c', '#ff9d00', '#00982b','#6f97de', '#0054e3'],
             chart: {
                 backgroundColor: '#2d3e65',
-                
+                alignTicks:false,
             },
             title:null,
             legend: {enabled: false},
@@ -205,20 +188,15 @@ angular.module('starter.controllers', [])
         categories: []
 	   },
         yAxis: [{ // Primary yAxis
-            title: 'Goals completed',
-            gridLineColor: '#2d3e65',
-        }, { // Secondary yAxis
+            title: {text: 'Goals completed'},
             gridLineColor: '#333333',
+            tickPositions:[0,1,2,3],
+        }, { // Secondary yAxis
+            title: {text: 'Mood'},
+            gridLineWidth:0,
             labels: {enabled:false},
-            title: 'Goals completed',
             opposite: true,
         }],
-        tooltip: {
-            formatter: function () {
-    		  //  return '';
-                this.x + ': ' + this.y;
-            }
-        },
         
         series: [{
             name: 'Goals completed',
@@ -228,22 +206,26 @@ angular.module('starter.controllers', [])
             name: '1',
             type: 'spline',
             visible:true,
-            yAxis: 1
+            yAxis: 1,
+            enableMouseTracking:false,
         },{
             name: '2',
             type: 'spline',
             visible:false,
-            yAxis: 1
+            yAxis: 1,
+            enableMouseTracking:false,
         },{
             name: '3',
             type: 'spline',
             visible:false,
-            yAxis: 1
+            yAxis: 1,
+            enableMouseTracking:false,
         }, {
             name: '4',
             type: 'spline',
             visible:false,
-            yAxis: 1
+            yAxis: 1,
+            enableMouseTracking:false,
         }]
     };
     

@@ -1,10 +1,10 @@
-<ion-view title="Graph">
+<ion-view title="Graph"  ng-controller="GraphCtrl">
   <ion-content>
-        <div ng-controller="GraphCtrl" data-ng-init="insertdata()">
+        <div data-ng-init="insertdata()">
             <highchart id="chart1" config="highchartsNG"></highchart>
             <div class = "padding text-center">
                 <p>Click to show/hide:</p>
-                <button class="button button-dark button-outline button-small" ng-click="help()"><i class="icon ion-help"></i></button>
+                <button class="button button-dark button-outline button-small" ng-click="openModal(1)"><i class="icon ion-help"></i></button>
             </div>
             
             <div class = "padding text-center">
