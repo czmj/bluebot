@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $localstorage) {
+.controller('AppCtrl', function($scope) {
 })
     
 
@@ -40,7 +40,7 @@ angular.module('starter.controllers', [])
                 })
         };
         
-        //TODO: stop two entries in one day
+        //TODO: Maybe? Stop two entries in one day. Or ask to confirm.
         var date = new Date().toUTCString().slice(5, 16);
         
         var goals = Math.floor(Math.random()*4);
@@ -62,7 +62,7 @@ angular.module('starter.controllers', [])
             date: points.date.concat(date)
         })
         
-        //TODO: fix this hack
+        //TODO: Graph doesn't refresh on first submit of scores - location.reload() solves this but it's ugly and hacky
         window.location.assign('#/app/graph');
         location.reload();
     };
@@ -167,26 +167,28 @@ angular.module('starter.controllers', [])
     
     $scope.highchartsNG = {
         options: {
-            colors: ['#191f2c', '#ff9d00', '#00982b','#6f97de', '#0054e3'],
+            colors: ['#20252e', '#ff9d00', '#00982b','#6f97de', '#0054e3'],
             chart: {
-                backgroundColor: '#2d3e65',
+                backgroundColor: '#394f64',
                 alignTicks:false,
+                height:320,
             },
             title:null,
             legend: {enabled: false},
+            tooltip:{enabled:false},
         },
         xAxis: {
-		gridLineColor: '#2d3e65',
-		gridLineWidth: 1,
+		gridLineWidth: 0,
 		labels: {
             maxStaggerLines:1,
             overflow: 'justify',
 			style: {
 				color: '#A0A0A0'
 			}
-		},           
+		  },        
         categories: []
-	   },
+	   },            
+        
         yAxis: [{ // Primary yAxis
             title: {text: 'Goals completed'},
             gridLineColor: '#333333',
@@ -201,34 +203,32 @@ angular.module('starter.controllers', [])
         series: [{
             name: 'Goals completed',
             type: "bar",
-            borderWidth:'0'
+            borderWidth:'1',
+            borderColor:'#2d3e65',
+            pointPadding: 1,
+            groupPadding: 1  
         },{
             name: '1',
             type: 'spline',
             visible:true,
-            yAxis: 1,
-            enableMouseTracking:false,
+            yAxis: 1
         },{
             name: '2',
             type: 'spline',
             visible:false,
-            yAxis: 1,
-            enableMouseTracking:false,
+            yAxis: 1
         },{
             name: '3',
             type: 'spline',
             visible:false,
-            yAxis: 1,
-            enableMouseTracking:false,
+            yAxis: 1
         }, {
             name: '4',
             type: 'spline',
             visible:false,
-            yAxis: 1,
-            enableMouseTracking:false,
+            yAxis: 1
         }]
     };
-    
         var points = $localstorage.getObject('points');
         var seriesArray = $scope.highchartsNG.series
         seriesArray[0].data = points.goalscompleted;
@@ -239,7 +239,5 @@ angular.module('starter.controllers', [])
 
         var xAxisArray = $scope.highchartsNG.xAxis
         xAxisArray.categories=points.date;
-
-      
 });
 
