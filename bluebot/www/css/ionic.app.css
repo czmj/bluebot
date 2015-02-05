@@ -5,6 +5,15 @@ a {
 strong {
   color: #ffb60a; }
 
+.col {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important; }
+
+.noborder {
+  border: 0 !important; }
+
 .menu-left .item {
   border-color: #20252e; }
   .menu-left .item .item-content {
@@ -4299,7 +4308,7 @@ ion-tabs.tabs-color-active-dark .tab-item {
  * --------------------------------------------------
  */
 .item {
-  border-color: #394f64;
+  border-color: #20252e;
   background-color: #394f64;
   color: #ededed;
   position: relative;
@@ -5135,7 +5144,7 @@ legend {
   margin-bottom: 1.42857;
   padding: 0;
   width: 100%;
-  border: 1px solid #394f64;
+  border: 1px solid #20252e;
   color: #20252e;
   font-size: 24px;
   line-height: 2.85714; }

@@ -24,7 +24,7 @@ $font-size-base:                  16px !default;
 $font-size-large:                 ($font-size-base * 1.25);
 $font-size-small:                 ($font-size-base * 0.75);
 
-// Links
+// Custom css
 // -------------------------
 a {
     color:                      $energized;
@@ -33,6 +33,17 @@ a {
 strong{
     color:                      saturate(lighten($energized,10%),40%);
 }
+.col{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.noborder{
+    border:0 !important;
+}
+    
 
 // Buttons
 // -------------------------------
@@ -52,12 +63,12 @@ $button-energized-active-border:  darken($energized, 10%) !default;
 
 // Items
 // -------------------------------
-
 $item-divider-bg:                 $dark !default;
 $item-divider-color:              $light !default;
 
+
 $item-default-bg:                 $stable !default;
-$item-default-border:             $stable !default;
+$item-default-border:             $dark !default;
 $item-default-text:               $light !default;
 $item-default-active-bg:          $stable !default;
 $item-default-active-border:      $stable !default;

@@ -69,9 +69,6 @@ angular.module('starter.controllers', [])
     
 })
 
-.controller('GoalsCtrl', function($scope, $localstorage){
-})
-
 .controller('GraphCtrl', function ($scope, $localstorage, $ionicModal, $timeout) {
 
     
@@ -239,5 +236,29 @@ angular.module('starter.controllers', [])
 
         var xAxisArray = $scope.highchartsNG.xAxis
         xAxisArray.categories=points.date;
-});
+})
 
+
+.controller('GoalsCtrl', function($scope, $localstorage){
+})
+
+
+.controller('SettingsCtrl', function($scope, $localstorage){
+    $scope.resetTutorial = function() { 
+        if(confirm("Do you want to reset all tutorials?")){
+            $localstorage.setObject('tutorial',0);
+        }
+    }
+    $scope.deleteScores = function() { 
+        if(confirm("Do you want to delete all logs?")){
+            $localstorage.setObject('points', {
+                    goalscompleted: [],
+                    score1: [],
+                    score2: [],
+                    score3: [],
+                    score4: [],
+                    date:[]
+                })
+        }
+    }
+});

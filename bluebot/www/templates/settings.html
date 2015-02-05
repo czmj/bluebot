@@ -1,4 +1,14 @@
 <ion-view view-title="Settings">
-  <ion-content>
+  <ion-content ng-controller="SettingsCtrl">
+    <div class="list">
+          <a class="item item-icon-left" ng-click="resetTutorial()">
+            <i class="icon ion-refresh"></i>
+            Reset Tutorial
+          </a>
+        <a class="item item-icon-left" ng-click="deleteScores()">
+            <i class="icon ion-trash-b"></i>
+            Delete all logs
+          </a>
+      </div>
   </ion-content>
 </ion-view>
