@@ -1,0 +1,19 @@
+<ion-view title="Graph"  ng-controller="GraphCtrl" data-ng-init="insertdata()">
+  <ion-content>
+        <div>
+            <highchart class="padding-top" id="chart1" config="highchartsNG"></highchart>
+            <div class = "padding text-center">
+                <p>Click to show/hide:</p>
+                <button class="button button-dark button-outline button-small" ng-click="openModal(1)"><i class="icon ion-help"></i></button>
+            </div>
+            
+            <div class = "padding text-center">
+                <button ng-class="{'padding-left button button-energized': !active1, 'padding-left button button-energized button-outline': active1}" ng-click="showSeriesToggle(1);active1=!active1"><i class="icon icon-sun"></i></button>
+                <button ng-class="{'padding-left button button-balanced button-outline': !active2, 'padding-left button button-balanced': active2}" ng-click="showSeriesToggle(2);active2=!active2"><i class="icon icon-grow"></i></button>
+                <button ng-class="{'padding-left button button-calm button-outline': !active3, 'padding-left button button-calm': active3}" ng-click="showSeriesToggle(3);active3=!active3"><i class="icon icon-wave"></i></button>
+                <button ng-class="{'padding-left button button-royal button-outline': !active4, 'padding-left button button-royal': active4}" ng-click="showSeriesToggle(4);active4=!active4"><i class="icon icon-light"></i></button>                
+            </div>
+        </div>
+  </ion-content>
+</ion-view>
+    
