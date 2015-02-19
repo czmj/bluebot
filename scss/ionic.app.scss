@@ -1,0 +1,114 @@
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+
+// Colors
+// -------------------------------
+
+$light:                           #ededed !default;
+$stable:                          #394f64 !default;
+$positive:                        #0054e3 !default;
+$calm:                            #6f97de !default;
+$balanced:                        #00982b !default;
+$energized:                       #ff9d00 !default;
+$assertive:                       #d61d0e !default;
+$royal:                           #0054e3 !default;
+$dark:                            #20252e !default; 
+
+
+// Base
+// -------------------------------
+
+$base-background-color:           $stable !default;
+$base-color:                      $light !default;
+$font-size-base:                  16px !default;
+$font-size-large:                 ($font-size-base * 1.25);
+$font-size-small:                 ($font-size-base * 0.75);
+
+// Custom css
+// -------------------------
+a {
+    color:                      $energized;
+    text-decoration: underline;
+}
+strong{
+    color:                      saturate(lighten($energized,10%),40%);
+}
+.col{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.noborder{
+    border:0 !important;
+}
+    
+
+// Buttons
+// -------------------------------
+
+$button-border-radius:            0px !default;
+$button-energized-text:           $dark !default;
+$button-stable-text:              $light !default;
+
+$button-dark-active-bg:           darken($dark, 10%) !default;
+
+
+$button-energized-border:         darken($energized, 10%) !default;
+$button-energized-active-border:  darken($energized, 10%) !default;
+
+// Checkboxes
+// -------------------------------
+
+// Items
+// -------------------------------
+$item-divider-bg:                 $dark !default;
+$item-divider-color:              $light !default;
+
+
+$item-default-bg:                 $stable !default;
+$item-default-border:             $dark !default;
+$item-default-text:               $light !default;
+$item-default-active-bg:          $stable !default;
+$item-default-active-border:      $stable !default;
+
+
+
+// Menus
+// -------------------------------
+$menu-bg:                         $stable !default;
+
+.menu-left .item{
+    border-color:               $dark;
+    
+    .item-content{
+        background-color:       $stable;
+ 
+    }
+}
+
+
+// Modals
+// -------------------------------
+
+$modal-bg-color:                  $stable !default;
+
+// Range
+// -------------------------------
+
+$range-default-track-bg:          $dark !default;
+$range-slider-width:              20px !default;
+$range-slider-height:             20px !default;
+
+.range .icon {
+  margin-right: 10px !important;
+  margin-left: 10px !important;
+}
+input[type=range]::-webkit-slider-thumb {
+    background: $dark !important;
+}
+
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic";
+
