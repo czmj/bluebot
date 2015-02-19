@@ -10,6 +10,14 @@
         "/home/clara/Documents/coding/bluebot/bluebot/plugins/org.apache.cordova.device/src/tizen/DeviceProxy.js",
         "/home/clara/Documents/coding/bluebot/bluebot/plugins/org.apache.cordova.device/src/ubuntu/device.js",
         "/home/clara/Documents/coding/bluebot/bluebot/plugins/org.apache.cordova.device/src/browser/DeviceProxy.js",
-        "/home/clara/Documents/coding/bluebot/bluebot/www/js/controllers.js"
+        "/home/clara/Documents/coding/bluebot/bluebot/www/js/controllers.js",
+        "/home/clara/Documents/coding/bluebot/gulpfile.js",
+        "/home/clara/Documents/coding/bluebot/hooks/after_plugin_rm/010_deregister_plugin.js",
+        "/home/clara/Documents/coding/bluebot/hooks/after_platform_add/010_install_plugins.js",
+        "/home/clara/Documents/coding/bluebot/hooks/after_prepare/010_add_platform_class.js",
+        "/home/clara/Documents/coding/bluebot/hooks/after_prepare/020_remove_sass_from_platforms.js",
+        "/home/clara/Documents/coding/bluebot/hooks/before_platform_add/init_directories.js",
+        "/home/clara/Documents/coding/bluebot/hooks/after_plugin_add/010_register_plugin.js",
+        "/home/clara/Documents/coding/bluebot/www/js/controllers.js"
     ]
 }

@@ -74,6 +74,11 @@ $item-default-active-bg:          $stable !default;
 $item-default-active-border:      $stable !default;
 
 
+// Forms
+// -------------------------------
+
+$input-color: $light !default;
+
 
 // Menus
 // -------------------------------
@@ -108,6 +113,7 @@ $range-slider-height:             20px !default;
 input[type=range]::-webkit-slider-thumb {
     background: $dark !important;
 }
+
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";

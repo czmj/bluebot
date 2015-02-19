@@ -1,11 +1,55 @@
-<ion-view view-title="Choose 3 goals:">
+<ion-view view-title="Choose some goals:" ng-controller="GoalsCtrl">
+    <!--custom nav bar is required to include plus button-->
+    <ion-nav-bar class="bar-dark">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <button class="button button-icon button-clear- ion-plus" ng-click="newgoal()"></button> 
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
     <ion-content>
-        <div ng-controller="GoalsCtrl">
-            <div class="list">
-        
-                <div class="row padding">
-                    <button ng-click="" class="button icon-right ion-chevron-right button-energized col col-offset-50" type="submit">Submit</button>
-                </div>
-        </div>
+            <div  ng-repeat="goal in goals">
+                <ion-checkbox id="goal-{{goal.id}}">
+                    {{goal.title}}
+                </ion-checkbox>
+            </div>
     </ion-content>
+<script id="new-goal.html" type="text/ng-template">
+
+  <div class="modal">
+
+    <!-- Modal header bar -->
+    <ion-header-bar class="bar-dark">
+      <h1 class="title">New Goal</h1>
+      <button class="button button-clear button-light" ng-click="closeNewgoal()">Cancel</button>
+    </ion-header-bar>
+
+    <!-- Modal content area -->
+    <ion-content>
+
+      <form ng-submit="creategoal(goal)">
+        <div class="list">
+          <label class="item item-input">
+            <input type="text" placeholder="What do you want to do?" ng-model="goal.title">
+          </label>
+        </div>
+        <div class="padding">
+          <button type="submit" class="button button-block button-energized">Create Goal</button>
+        </div>
+      </form>
+
+    </ion-content>
+
+  </div>
+
+</script>
+
 </ion-view>
+
+    
+

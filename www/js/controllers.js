@@ -239,7 +239,93 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('GoalsCtrl', function($scope, $localstorage){
+.controller('GoalsCtrl', function($scope, $localstorage, $ionicModal){
+    
+    if(window.localStorage['goals'] == null){
+                $localstorage.setObject('goals', [
+                    { 
+                        title: 'Get out of bed',
+                        description: 'If you achieve this, give yourself a big pat on the back. It\'s the first step to a great day!',
+                        focus:0,
+                        completed:0
+                    },{ 
+                        title: 'Take a shower or bath',
+                        description: 'Having a wash can help you feel better about yourself, and it\'s also a great way to relax.',
+                        focus:0,
+                        completed:0
+                    },{ 
+                        title: 'Take medication' ,
+                        description: 'If your doctor has prescribed you medication, it\'s important to take it',
+                        focus:0,
+                        completed:0
+                    },{ 
+                        title: 'Eat a healthy meal' ,
+                        description: 'If you\'re struggling, ask a friend for help preparing a meal.',
+                        focus:0,
+                        completed:0
+                    },{ 
+                        title: 'Meditate' ,
+                        description: 'Meditation can help you sleep better, focus better and reduce stress. If you find it difficult, start with just a few minutes.',
+                        focus:0,
+                        completed:0
+                    },{ 
+                        title: 'Go for a walk' ,
+                        description: 'Walking releases endorpins, and can give you some time to think and reframe situations more optimistically.',
+                        focus:0,
+                        completed:0
+                    },{ 
+                        title: 'Write in a journal' ,
+                        description: 'Journalling can give you an outlet for feelings, and can help you to find the underlying reasons.',
+                        focus:0,
+                        completed:0
+                    },{ 
+                        title: 'Do breathing exercises' ,
+                        description: 'Breathing deeply gets more oxygen into your body and releases tension, and you can do it anytime or anywhere.',
+                        focus:0,
+                        completed:0
+                    },{ 
+                        title: 'Listen to relaxing music' ,
+                        description: 'If you\'re struggling, ask a friend for help preparing a meal.',
+                        focus:0,
+                        completed:0
+                    },{ 
+                        title: 'Eat a healthy meal' ,
+                        description: 'Listening to calm, quiet music slows your pulse and heart rate, lowers blood pressure, and decreses levels of stress hormones.',
+                        focus:0,
+                        completed:0
+                    }
+                ])
+        };
+    
+    $scope.goals = $localstorage.getObject('goals');
+    
+     // Create and load the Modal
+  $ionicModal.fromTemplateUrl('new-goal.html', function(modal) {
+    $scope.goalModal = modal;
+  }, {
+    scope: $scope,
+    animation: 'slide-in-up'
+  });
+
+  // Called when the form is submitted
+  $scope.creategoal = function(goal) {
+    $scope.goals.push({
+      title: goal.title
+    });
+    $scope.goalModal.hide();
+    goal.title = "";
+  };
+
+  // Open our new goal modal
+  $scope.newgoal = function() {
+    $scope.goalModal.show();
+  };
+
+  // Close the new goal modal
+  $scope.closeNewgoal = function() {
+    $scope.goalModal.hide();
+  };
+    
 })
 
 

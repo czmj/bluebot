@@ -80,6 +80,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'highcharts-ng', 'ion
       }
     }
   })
+      .state('app.goals', {
+    url: "/goals",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/goals.html"
+      }
+    }
+  })
   
     .state('app.about', {
     url: "/about",
