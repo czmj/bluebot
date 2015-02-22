@@ -63,6 +63,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'highcharts-ng', 'ion
       }
     }
   })
+      .state('app.complete-goals', {
+    url: "/complete-goals",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/complete-goals.html"
+      }
+    }
+  })
       .state('app.goals', {
     url: "/goals",
     views: {
@@ -90,7 +98,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'highcharts-ng', 'ion
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/graph');
+  $urlRouterProvider.otherwise('/app/goals');
 });
 
 

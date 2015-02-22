@@ -22,23 +22,23 @@ angular.module('starter.controllers', [])
     //have succesfully got to the input page! (somehow)
     if(window.localStorage['tutorial']==null || window.localStorage['tutorial']==0) window.localStorage['tutorial']=1;
     
-  // hints help modal
-  $ionicModal.fromTemplateUrl('templates/help.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-    
-  $scope.closeModal = function(index) {
-    if (index==1) $scope.modal.hide();
-  };
-  $scope.$on('$destroy', function() {
-    $scope.modal.remove();
-  });
+    // hints help modal
+    $ionicModal.fromTemplateUrl('templates/help.html', {
+        scope: $scope
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
 
-  $scope.help = function() {
-    $scope.modal.show();
-  };
+    $scope.closeModal = function(index) {
+        if (index===1) $scope.modal.hide();
+    };
+    $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+    });
+
+    $scope.help = function() {
+        $scope.modal.show();
+    };
     
     $scope.submitScores = function () {
         //if points does not exist, create an empty object
@@ -58,9 +58,9 @@ angular.module('starter.controllers', [])
             //if ponts does exist, load it from the db   
             $scope.points=JSON.parse(window.localStorage['points']);
         };
-       // console.log($scope.points.date[0])
+        
         //generate random goals completed - TODO: get actual goals completed
-        $scope.goals = Math.floor(Math.random()*4);
+        $scope.goalscompleted = Math.floor(Math.random()*4);
         
         //get values from the input sliders
         if($scope.range1==null){$scope.slider1=50}else{$scope.slider1=parseInt($scope.range1)};
@@ -71,7 +71,7 @@ angular.module('starter.controllers', [])
         
         function pushScores(){
             //add new values to points object
-            $scope.points.goalscompleted.push($scope.goals);        
+            $scope.points.goalscompleted.push($scope.goalscompleted);        
             $scope.points.score1.push($scope.slider1);
             $scope.points.score2.push($scope.slider2);
             $scope.points.score3.push($scope.slider3);
@@ -80,7 +80,16 @@ angular.module('starter.controllers', [])
             
             //save to local storage db
             window.localStorage['points'] = JSON.stringify($scope.points);
-            window.location.assign('#/app/choose-goals');
+            
+            $scope.goals=JSON.parse(window.localStorage['goals']);
+            var focusCount=0;
+            for (var i=0; i<$scope.goals.length; i++){
+                if ($scope.goals[i].focus===1){
+                    focusCount+=1;
+                }
+            }
+            if (focusCount>0) window.location.assign('#/app/complete-goals');
+            else window.location.assign('#/app/choose-goals');
         }
         
         //if most recent's entry date==today's date, confirm multiple submits in one day.
@@ -99,7 +108,6 @@ angular.module('starter.controllers', [])
 
 .controller('GraphCtrl', function ($scope, $ionicModal, $timeout) {
 
-    
     // help modal
     $ionicModal.fromTemplateUrl('templates/help.html', {
       id: '1', // id is referenced by openModal()
@@ -110,55 +118,39 @@ angular.module('starter.controllers', [])
       $scope.help = modal;
     });
     
-    // tutorial modal 1
-    $ionicModal.fromTemplateUrl('templates/start.html', {
-      id: '2',
-      scope: $scope,
-      backdropClickToClose: false,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.start = modal;
-    });
-    
-    // tutorial modal 2
-    $ionicModal.fromTemplateUrl('templates/start2.html', {
+    // tutorial modal 3
+    $ionicModal.fromTemplateUrl('templates/start3.html', {
       id: '3',
       scope: $scope,
       backdropClickToClose: false,
       animation: 'slide-in-up'
     }).then(function(modal) {
-      $scope.start2 = modal;
+      $scope.start3 = modal;
     });
 
     $scope.openModal = function(index) {
-        if(index == 1) $scope.help.show();
-        else if (window.localStorage['tutorial'] == null || window.localStorage['tutorial'] == 0) $scope.start.show();
-        else if (window.localStorage['tutorial'] == 1) $scope.start2.show();
+        if(index === 1) $scope.help.show();
+        else if (window.localStorage['tutorial'] == 2) $scope.start3.show();
     };
     
     $scope.closeModal = function(index) {
-        console.log(index)
-        if(index == 1){ 
+        if(index === 1){ 
             $scope.help.hide()
-        }else if (index = 2){
-            //submit on start1
-            $scope.start.hide();
-            window.location.assign('#/app/input-score');
-            window.localStorage['tutorial'] = 1;
-        }else if (index==3){
-            //submit on start2
-            $scope.start2.hide();
+        }else if (index === 3){
             window.location.assign('#/app/choose-goals');
-            window.localStorage['tutorial'] = 9;
+            skip(index);
         }
     }
         
     $scope.skip = function(index) {   
-             if(index==1){
+            if(index === 1){
                 $scope.start.hide();
                 window.localStorage['tutorial'] = 9;
-            }else if(index==2){
+            }else if(index === 2){
                 $scope.start2.hide();
+                window.localStorage['tutorial'] = 9;
+            }else if(index === 3){
+                $scope.start3.hide();
                 window.localStorage['tutorial'] = 9;
             }
         }
@@ -170,23 +162,23 @@ angular.module('starter.controllers', [])
     $scope.$on('$destroy', function() {
       $scope.help.remove();
       $scope.start.remove();
-      $scope.start2.remove();
+      $scope.start3.remove();
 
     })
 
             
-  $timeout($scope.openModal, 800);
-  
-    $scope.showSeriesToggle = function (seriesNum) {
-        var seriesArray = $scope.highchartsNG.series;
-        if (seriesArray[seriesNum].visible){
-            seriesArray[seriesNum].visible=false;
+    $timeout($scope.openModal, 800);
+    
+   $scope.showSeriesToggle = function (seriesNum) {
+        $scope.seriesArray = $scope.highchartsNG.series;
+        if($scope.seriesArray[seriesNum].visible){
+            $scope.seriesArray[seriesNum].visible=false;
         }else{
-            seriesArray[seriesNum].visible=true;
+            $scope.seriesArray[seriesNum].visible=true;
         }
         
     }
-    
+
     $scope.highchartsNG = {
         options: {
             colors: ['#20252e', '#ff9d00', '#00982b','#6f97de', '#0054e3'],
@@ -251,20 +243,22 @@ angular.module('starter.controllers', [])
             yAxis: 1
         }]
     };
-        $scope.points = window.localStorage['points'];
+        //get points from local storage, or use an empty object as a fallback
+        $scope.points = JSON.parse(window.localStorage['points'] || '{}');
+    
         $scope.seriesArray = $scope.highchartsNG.series
-        seriesArray[0].data = points.goalscompleted;
-        seriesArray[1].data = points.score1;
-        seriesArray[2].data = points.score2;
-        seriesArray[3].data = points.score3;
-        seriesArray[4].data = points.score4;
+        $scope.seriesArray[0].data = $scope.points.goalscompleted;
+        $scope.seriesArray[1].data = $scope.points.score1;
+        $scope.seriesArray[2].data = $scope.points.score2;
+        $scope.seriesArray[3].data = $scope.points.score3;
+        $scope.seriesArray[4].data = $scope.points.score4;
 
         var xAxisArray = $scope.highchartsNG.xAxis
-        xAxisArray.categories=points.date;
+        xAxisArray.categories=$scope.points.date;
 })
 
 
-.controller('GoalsCtrl', function($scope, $ionicModal){
+.controller('GoalsCtrl', function($scope, $ionicModal, $timeout){
     if(window.localStorage['goals'] == null){
                 $scope.goals=[
                     { 
@@ -272,66 +266,111 @@ angular.module('starter.controllers', [])
                         title: 'Get out of bed',
                         description: 'If you achieve this, give yourself a big pat on the back. It\'s the first step to a great day!',
                         focus:0,
-                        completed:0
+                        completed:0,
+                        icon: 'icon-sun'
                     },{ 
                         id:2,
                         title: 'Take a shower or bath',
                         description: 'Having a wash can help you feel better about yourself, and it\'s also a great way to relax.',
                         focus:0,
-                        completed:0
+                        completed:0,
+                        icon: 'icon-sun'
                     },{ 
                         id:3,
                         title: 'Take medication' ,
                         description: 'If your doctor has prescribed you medication, it\'s important to take it',
                         focus:0,
-                        completed:0
+                        completed:0,
+                        icon: 'icon-sun'
                     },{ 
                         id:4,
                         title: 'Eat a healthy meal' ,
                         description: 'If you\'re struggling, ask a friend for help preparing a meal.',
                         focus:0,
-                        completed:0
+                        completed:0,
+                        icon: 'icon-sun'
                     },{ 
                         id:5,
                         title: 'Meditate' ,
                         description: 'Meditation can help you sleep better, focus better and reduce stress. If you find it difficult, start with just a few minutes.',
                         focus:0,
-                        completed:0
+                        completed:0,
+                        icon: 'icon-sun'
                     },{ 
                         id:6,
                         title: 'Go for a walk' ,
                         description: 'Walking releases endorpins, and can give you some time to think and reframe situations more optimistically.',
                         focus:0,
-                        completed:0
+                        completed:0,
+                        icon: 'icon-sun'
                     },{ 
                         id:7,
                         title: 'Write in a journal' ,
                         description: 'Journalling can give you an outlet for feelings, and can help you to find the underlying reasons.',
                         focus:0,
-                        completed:0
+                        completed:0,
+                        icon: 'icon-sun'
                     },{ 
                         id:8,
                         title: 'Do breathing exercises' ,
                         description: 'Breathing deeply gets more oxygen into your body and releases tension, and you can do it anytime or anywhere.',
                         focus:0,
-                        completed:0
+                        completed:0,
+                        icon: 'icon-sun'
                     },{ 
                         id:9,
                         title: 'Listen to relaxing music' ,
                         description: 'If you\'re struggling, ask a friend for help preparing a meal.',
                         focus:0,
-                        completed:0
+                        completed:0,
+                        icon: 'icon-sun'
                     }
                 ]
-                
+        //save to local storage db   
         window.localStorage['goals'] = JSON.stringify($scope.goals);
         }else{
             $scope.goals=JSON.parse(window.localStorage['goals']);
         }
     
-    $scope.submitGoals = function () {
+    // called when complete-goals form is submitted
+    $scope.completeGoals = function () {
+        for (var i =0; i<$scope.goals.length; i++){
+            if($scope.goals[i].checked===true) $scope.goals[i].completed+=1;
+        }
+        window.localStorage['goals'] = JSON.stringify($scope.goals);
+        window.location.assign('#/app/choose-goals');
     }
     
+    // called when choose-goals form is submitted
+    $scope.chooseGoals = function () {
+        for (var i =0; i<$scope.goals.length; i++){
+            if($scope.goals[i].checked===true) $scope.goals[i].focus=1;
+            else $scope.goals[i].focus=0;
+        }
+        window.localStorage['goals'] = JSON.stringify($scope.goals);
+        window.location.assign('#/app/graph');
+    }
+        
+      // Called when the new-goal form is submitted
+      $scope.creategoal = function(goal) {
+        $scope.goals.push({
+            id: $scope.goals.length+1,
+            title: goal.title,
+            description: goal.description,
+            focus: 0,
+            completed: 0,
+        });
+        window.localStorage['goals'].concat({
+            id: $scope.goals.length+1,
+            title: goal.title,
+            description: goal.description,
+            focus: 0,
+            completed: 0,
+        });
+
+        $scope.goalModal.hide();
+        console.log($scope.goals);
+      };
     
     
     // new goal modal
@@ -353,42 +392,71 @@ angular.module('starter.controllers', [])
     }).then(function(modal) {
       $scope.help = modal;
     });
+    
+    // tutorial modal 1
+    $ionicModal.fromTemplateUrl('templates/start.html', {
+      id: '3',
+      scope: $scope,
+      backdropClickToClose: false,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.start = modal;
+    });
+    // tutorial modal 2
+    $ionicModal.fromTemplateUrl('templates/start2.html', {
+      id: '4',
+      scope: $scope,
+      backdropClickToClose: false,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.start2 = modal;
+    });
 
 
     $scope.openModal = function(index) {
-        if (index==1) $scope.goalModal.show();
-        else if (index == 2) $scope.help.show();
+        if (index===1) $scope.goalModal.show();
+        else if (index === 2) $scope.help.show();
+        else if (window.localStorage['tutorial'] == null || window.localStorage['tutorial'] == 0) $scope.start.show();
+        else if (window.localStorage['tutorial'] === 1) $scope.start2.show();
+        
     };
     
     $scope.closeModal = function(index) {
-        console.log(index)
-        if(index == 1) $scope.goalModal.hide()
-        else if (index = 2) $scope.help.hide();
+        if(index === 1){    
+            $scope.goalModal.hide()
+            
+        }else if (index === 2){
+            $scope.help.hide();
+            
+        }else if (index === 3){
+            $scope.start.hide();
+            window.location.assign('#/app/input-score');
+            window.localStorage['tutorial'] = 1;
+        }else if (index === 4){
+            $scope.start2.hide();
+            window.localStorage['tutorial'] = 2;
+        }
     }
+    $scope.skip = function(index) {   
+            if(index === 1){
+                $scope.start.hide();
+                window.localStorage['tutorial'] = 9;
+            }else if(index === 2){
+                $scope.start2.hide();
+                window.localStorage['tutorial'] = 9;
+            }else if(index === 3){
+                $scope.start3.hide();
+                window.localStorage['tutorial'] = 9;
+            }
+        }
     
-    
-  // Called when the new-goal form is submitted
-  $scope.creategoal = function(goal) {
-    $scope.goals.push({
-        id: $scope.goals.length+1,
-        title: goal.title,
-        description: goal.description,
-        focus: 0,
-        completed: 0,
-    });
-    
-    //push this to local storage
-    window.localStorage['goals'].concat({
-        id: $scope.goals.length+1,
-        title: goal.title,
-        description: goal.description,
-        focus: 0,
-        completed: 0,
-    });
-      
-    $scope.goalModal.hide();
-    console.log($scope.goals);
-  };
+    $scope.$on('$destroy', function() {
+      $scope.goalModal.remove();
+      $scope.start.remove();
+      $scope.help.remove();
+
+    })
+  $timeout($scope.openModal, 800);
     
 })
 

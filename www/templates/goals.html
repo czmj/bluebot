@@ -2,13 +2,13 @@
     <ion-content>
         <div ng-controller="GoalsCtrl">
             <div ng-repeat="goal in goals | filter:{ focus:1} track by goal.id">
-                <a class="item item-icon-right">
-                    {{goal.title}}
-                    <i class="icon ion-chevron-right"></i>
-                </a>
+                <div class="item item-stable item-icon-left item-text-wrap">
+                    <i class="icon dark {{goal.icon}}"></i>
+                    <h2>{{goal.title}}</h2>
+                    <p>{{goal.description}}</p>
+                </div>
             </div>
+            
         </div>
     </ion-content>
 </ion-view>
-    
-

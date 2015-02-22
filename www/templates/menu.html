@@ -1,14 +1,12 @@
-<ion-side-menus enable-menu-with-back-views="false">
-  <ion-side-menu-content>
+<ion-side-menus enable-menu-with-back-views="true">
     <ion-nav-bar class="bar-dark">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
-
       <ion-nav-buttons side="left">
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
       </ion-nav-buttons>
     </ion-nav-bar>
+  <ion-side-menu-content>
+    
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
 
@@ -18,22 +16,19 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item nav-clear menu-close href="#/app/input-score">
+        <ion-item class="item-stable" nav-clear menu-close href="#/app/input-score">
           Log your mood
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/graph" ui-sref="app.graph">
+        <ion-item class="item-stable" nav-clear menu-close href="#/app/graph" ui-sref="app.graph">
           Mood graph
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/choose-goals">
-          Choose goals
+        <ion-item class="item-stable" nav-clear menu-close href="#/app/goals">
+          Today's Goals
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/goals">
-          Review Goals
-        </ion-item>
-        <ion-item nav-clear menu-close href="#/app/settings">
+        <ion-item class="item-stable" nav-clear menu-close href="#/app/settings">
           Settings
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/about">
+        <ion-item class="item-stable" nav-clear menu-close href="#/app/about">
           About
         </ion-item>
         <!--<ion-item nav-clear menu-close href="#/app/goalslists">

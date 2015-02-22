@@ -1,33 +1,35 @@
-<ion-view view-title="Choose some goals:" ng-controller="GoalsCtrl">
+<ion-view view-title="Choose some new goals:" ng-controller="GoalsCtrl" hide-back-button="true">
     <!--custom nav bar is required to include plus button-->
     <ion-nav-bar class="bar-dark">
         <ion-nav-back-button>
         </ion-nav-back-button>
-
         <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
         </ion-nav-buttons>
         <ion-nav-buttons side="right">
-            <button class="button button-icon button-clear ion-plus" ng-click="openModal(1)"></button> 
+            <button class="button button-icon button-clear ion-plus" ng-click="openModal(1)"></button>
         </ion-nav-buttons>
     </ion-nav-bar>
-
+    
+<form ng-submit="chooseGoals()">
     <ion-content>
             <div ng-repeat="goal in goals track by goal.id">
-                <ion-checkbox ng-model="goal.checked" ng-checked="goal.checked" class="checkbox-dark item item-button-right">
-                    {{goal.title}} {{ goal.checked }}
+                <ion-checkbox ng-model="goal.checked" ng-checked="goal.checked" class="checkbox-dark item item-stable item-button-right">
+                    {{goal.title}}
                 </ion-checkbox>
                 <!--<button class="button button-icon ion-close" ng-click=""></button>-->
             </div>
-
+       
     </ion-content>
 <ion-footer-bar class="bar-dark">
     <div class="buttons">
-        <button class="button button-icon button-clear ion-help" ng-click="openModal(2)"></button>
+        <a class="button button-icon button-clear ion-help" ng-click="openModal(2)"></a>
         <h1 class="title"></h1>
         <button class="button icon-right ion-chevron-right button-energized" type="submit">Submit</button>
-    </div>   
+    </div>
 </ion-footer-bar>
+     
+</form>
     
 <script id="new-goal.html" type="text/ng-template">
 
@@ -44,10 +46,10 @@
 
       <form ng-submit="creategoal(goal)">
         <div class="list">
-          <label class="item item-input">
+          <label class="item item-stable item-input">
             <input type="text" placeholder="What do you want to do?" ng-model="goal.title">
           </label>
-          <label class="item item-input">
+          <label class="item item-stable item-input">
             <input type="text" placeholder="Write a desciption (optional)" ng-model="goal.description">
           </label>
         </div>

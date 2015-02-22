@@ -24,7 +24,8 @@ $font-size-base:                  16px !default;
 $font-size-large:                 ($font-size-base * 1.25);
 $font-size-small:                 ($font-size-base * 0.75);
 
-// Custom css
+
+// Custom bits and pieces
 // -------------------------
 a {
     color:                      $energized;
@@ -42,6 +43,9 @@ strong{
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
+.dark{
+    color:$dark !important;
+}
 
 .noborder{
     border:0 !important;
@@ -51,9 +55,9 @@ strong{
 // Buttons
 // -------------------------------
 
-$button-border-radius:            0px !default;
-$button-energized-text:           $dark !default;
-$button-stable-text:              $light !default;
+$button-border-radius:            0px;
+$button-energized-text:           $dark;
+$button-stable-text:              $light;
 
 $button-dark-active-bg:           darken($dark, 10%) !default;
 
@@ -64,19 +68,20 @@ $button-energized-active-border:  darken($energized, 10%) !default;
 // Checkboxes
 // -------------------------------
 $checkbox-off-bg-color: $stable;
+//$checkbox-border-radius:  0px;
 
 // Items
 // -------------------------------
 $item-divider-bg:                 $dark !default;
 $item-divider-color:              $light !default;
 
+$item-stable-border:             $dark;
+$item-stable-active-bg:          $dark;
+$item-stable-active-border:      $dark;
 
-$item-default-bg:                 $stable !default;
-$item-default-border:             $dark !default;
-$item-default-text:               $light !default;
-$item-default-active-bg:          $stable !default;
-$item-default-active-border:      $stable !default;
-
+.item p{
+    color: darken($light,25%) !important;
+}
 
 // Forms
 // -------------------------------
@@ -87,16 +92,6 @@ $input-color: $light !default;
 // Menus
 // -------------------------------
 $menu-bg:                       $stable !default;
-
-.menu-left .item{
-    border-color:               $dark;
-    
-    .item-content{
-        background-color:       $stable;
- 
-    }
-}
-
 
 // Modals
 // -------------------------------

@@ -1,0 +1,20 @@
+<ion-view view-title="Completed Goals:" ng-controller="GoalsCtrl" hide-back-button="true">
+    <ion-content>
+        <h4 class="padding" >Which goals did you complete today?</h4>
+        <form ng-submit="completeGoals()">
+            <div ng-repeat="goal in goals | filter:{ focus:1} track by goal.id">
+                <ion-checkbox ng-model="goal.checked" ng-checked="goal.checked" class="checkbox-dark item item-stable item-button-right">
+                    {{goal.title}}
+                </ion-checkbox>
+                <!--<button class="button button-icon ion-close" ng-click=""></button>-->
+            </div>
+        
+        <a class="button button-icon button-clear ion-help" ng-click="openModal(1)"></a>
+        <button class="button icon-right ion-chevron-right button-energized" type="submit">Submit</button>
+           
+        </form>
+    </ion-content> 
+</ion-view>
+
+    
+
