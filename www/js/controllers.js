@@ -154,7 +154,6 @@ angular.module('starter.controllers', [])
     // and removing the scope from its parent.
     $scope.$on('$destroy', function() {
       $scope.help.remove();
-      $scope.start.remove();
       $scope.start3.remove();
 
     })
@@ -237,17 +236,26 @@ angular.module('starter.controllers', [])
         }]
     };
         //get points from local storage, or use an empty object as a fallback
-        $scope.points = JSON.parse(window.localStorage['points'] || '{}');
-    
+        $scope.points = JSON.parse(window.localStorage['points'] || '[{}]');
+        
+    //this is hacky, but I'm basically adding the first data property for seriesArray
         $scope.seriesArray = $scope.highchartsNG.series
-        $scope.seriesArray[0].data = $scope.points.goalscompleted;
-        $scope.seriesArray[1].data = $scope.points.score1;
-        $scope.seriesArray[2].data = $scope.points.score2;
-        $scope.seriesArray[3].data = $scope.points.score3;
-        $scope.seriesArray[4].data = $scope.points.score4;
+        $scope.seriesArray[0].data=[$scope.points[1].goalscompleted]
+        $scope.seriesArray[1].data=[$scope.points[1].score1]
+        $scope.seriesArray[2].data=[$scope.points[1].score2]
+        $scope.seriesArray[3].data=[$scope.points[1].score3]
+        $scope.seriesArray[4].data=[$scope.points[1].score4]
 
-        var xAxisArray = $scope.highchartsNG.xAxis
-        xAxisArray.categories=$scope.points.date;
+        for (var i=2; i<$scope.points.length; i++){
+            $scope.seriesArray[0].data.push($scope.points[i].goalscompleted);
+            $scope.seriesArray[1].data[i] = $scope.points[i].score1;
+            $scope.seriesArray[2].data[i] = $scope.points[i].score2;
+            $scope.seriesArray[3].data[i] = $scope.points[i].score3;
+            $scope.seriesArray[4].data[i] = $scope.points[i].score4;
+        }
+
+        $scope.xAxisArray = $scope.highchartsNG.xAxis
+        $scope.xAxisArray.categories=$scope.points.date;
 })
 
 
@@ -444,9 +452,10 @@ angular.module('starter.controllers', [])
         }
     
     $scope.$on('$destroy', function() {
-      $scope.goalModal.remove();
-      $scope.start.remove();
-      $scope.help.remove();
+        $scope.goalModal.remove();
+        $scope.start.remove();
+        $scope.start2.remove();
+        $scope.help.remove();
 
     })
   $timeout($scope.openModal, 800);
