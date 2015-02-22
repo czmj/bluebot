@@ -14,8 +14,8 @@
 
     <ion-content>
             <div ng-repeat="goal in goals track by goal.id">
-                <ion-checkbox class="checkbox-dark item item-button-right">
-                    {{goal.title}}
+                <ion-checkbox ng-model="goal.checked" ng-checked="goal.checked" class="checkbox-dark item item-button-right">
+                    {{goal.title}} {{ goal.checked }}
                 </ion-checkbox>
                 <!--<button class="button button-icon ion-close" ng-click=""></button>-->
             </div>

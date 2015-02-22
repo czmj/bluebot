@@ -80,7 +80,7 @@ angular.module('starter.controllers', [])
             
             //save to local storage db
             window.localStorage['points'] = JSON.stringify($scope.points);
-            //window.location.assign('#/app/choose-goals');
+            window.location.assign('#/app/choose-goals');
         }
         
         //if most recent's entry date==today's date, confirm multiple submits in one day.
@@ -325,10 +325,12 @@ angular.module('starter.controllers', [])
                 ]
                 
         window.localStorage['goals'] = JSON.stringify($scope.goals);
-        console.log('goals set');
         }else{
             $scope.goals=JSON.parse(window.localStorage['goals']);
         }
+    
+    $scope.submitGoals = function () {
+    }
     
     
     
@@ -374,10 +376,18 @@ angular.module('starter.controllers', [])
         focus: 0,
         completed: 0,
     });
+    
+    //push this to local storage
+    window.localStorage['goals'].concat({
+        id: $scope.goals.length+1,
+        title: goal.title,
+        description: goal.description,
+        focus: 0,
+        completed: 0,
+    });
+      
     $scope.goalModal.hide();
     console.log($scope.goals);
-    //push this to local storage
-    window.localStorage['goals'] = JSON.stringify($scope.goals);
   };
     
 })
