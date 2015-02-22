@@ -2,6 +2,9 @@ a {
   color: #ff9d00;
   text-decoration: underline; }
 
+body {
+  background: #394f64; }
+
 strong {
   color: #ffb60a; }
 
@@ -5480,7 +5483,7 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
     border-width: 1px;
     border-style: solid;
     border-radius: 28px;
-    background: #fff;
+    background: #394f64;
     content: ' ';
     -webkit-transition: background-color 20ms ease-in-out;
     transition: background-color 20ms ease-in-out; }

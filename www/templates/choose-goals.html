@@ -8,17 +8,27 @@
             <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
         </ion-nav-buttons>
         <ion-nav-buttons side="right">
-            <button class="button button-icon button-clear- ion-plus" ng-click="newgoal()"></button> 
+            <button class="button button-icon button-clear ion-plus" ng-click="openModal(1)"></button> 
         </ion-nav-buttons>
     </ion-nav-bar>
 
     <ion-content>
-            <div  ng-repeat="goal in goals">
-                <ion-checkbox id="goal-{{goal.id}}">
+            <div ng-repeat="goal in goals track by goal.id">
+                <ion-checkbox class="checkbox-dark item item-button-right">
                     {{goal.title}}
                 </ion-checkbox>
+                <!--<button class="button button-icon ion-close" ng-click=""></button>-->
             </div>
+
     </ion-content>
+<ion-footer-bar class="bar-dark">
+    <div class="buttons">
+        <button class="button button-icon button-clear ion-help" ng-click="openModal(2)"></button>
+        <h1 class="title"></h1>
+        <button class="button icon-right ion-chevron-right button-energized" type="submit">Submit</button>
+    </div>   
+</ion-footer-bar>
+    
 <script id="new-goal.html" type="text/ng-template">
 
   <div class="modal">
@@ -26,7 +36,7 @@
     <!-- Modal header bar -->
     <ion-header-bar class="bar-dark">
       <h1 class="title">New Goal</h1>
-      <button class="button button-clear button-light" ng-click="closeNewgoal()">Cancel</button>
+      <button class="button button-clear button-light" ng-click="closeModal(1)">Cancel</button>
     </ion-header-bar>
 
     <!-- Modal content area -->
@@ -36,6 +46,9 @@
         <div class="list">
           <label class="item item-input">
             <input type="text" placeholder="What do you want to do?" ng-model="goal.title">
+          </label>
+          <label class="item item-input">
+            <input type="text" placeholder="Write a desciption (optional)" ng-model="goal.description">
           </label>
         </div>
         <div class="padding">

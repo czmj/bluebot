@@ -4,11 +4,23 @@ angular.module('starter.controllers', [])
 .controller('AppCtrl', function($scope) {
 })
     
+.controller('MedsCtrl', function($scope){
+    if(window.localStorage['meds'] == null){
+        $scope.meds=[
+            {
+                name:1,
+            },{
+                name:2,
+            },{
+                name:3,
+            }];
+        window.localStorage['meds'] = JSON.stringify($scope.meds);
+    }
+})
 
-
-.controller('ScoresCtrl', function($scope, $localstorage, $ionicModal){
+.controller('ScoresCtrl', function($scope, $ionicModal){
     //have succesfully got to the input page! (somehow)
-    if(window.localStorage['tutorial']==null || window.localStorage['tutorial']==0) $localstorage.setObject('tutorial',1);
+    if(window.localStorage['tutorial']==null || window.localStorage['tutorial']==0) window.localStorage['tutorial']=1;
     
   // hints help modal
   $ionicModal.fromTemplateUrl('templates/help.html', {
@@ -29,47 +41,63 @@ angular.module('starter.controllers', [])
   };
     
     $scope.submitScores = function () {
+        //if points does not exist, create an empty object
         if(window.localStorage['points'] == null){
-                $localstorage.setObject('points', {
+                $scope.points={
                     goalscompleted: [],
                     score1: [],
                     score2: [],
                     score3: [],
                     score4: [],
                     date:[]
-                })
+                }
+                //push to local storage db
+                window.localStorage['points'] = JSON.stringify($scope.points);
+          
+        }else{
+            //if ponts does exist, load it from the db   
+            $scope.points=JSON.parse(window.localStorage['points']);
         };
+       // console.log($scope.points.date[0])
+        //generate random goals completed - TODO: get actual goals completed
+        $scope.goals = Math.floor(Math.random()*4);
         
-        //TODO: if most recent's entry date==today's date, confirm multiple submits in one day.
-        var date = new Date().toUTCString().slice(5, 16);
+        //get values from the input sliders
+        if($scope.range1==null){$scope.slider1=50}else{$scope.slider1=parseInt($scope.range1)};
+        if($scope.range2==null){$scope.slider2=50}else{$scope.slider2=parseInt($scope.range2)};
+        if($scope.range3==null){$scope.slider3=50}else{$scope.slider3=parseInt($scope.range3)};
+        if($scope.range4==null){$scope.slider4=50}else{$scope.slider4=parseInt($scope.range4)};
+        $scope.date = new Date().toUTCString().slice(5, 16);
         
-        var goals = Math.floor(Math.random()*4);
+        function pushScores(){
+            //add new values to points object
+            $scope.points.goalscompleted.push($scope.goals);        
+            $scope.points.score1.push($scope.slider1);
+            $scope.points.score2.push($scope.slider2);
+            $scope.points.score3.push($scope.slider3);
+            $scope.points.score4.push($scope.slider4);
+            $scope.points.date.push($scope.date);
+            
+            //save to local storage db
+            window.localStorage['points'] = JSON.stringify($scope.points);
+            //window.location.assign('#/app/choose-goals');
+        }
         
-        var points=$localstorage.getObject('points');
+        //if most recent's entry date==today's date, confirm multiple submits in one day.
+        if ($scope.date===$scope.points.date[$scope.points.date.length-1]){
+            if(confirm("You have already created one log today. Do you want to create another?")){
+                pushScores();
+            }
+        }else{
+            pushScores();
+        }
         
-        var slider1, slider2, slider3, slider4;
-        if($scope.range1==null){slider1=50}else{slider1=parseInt($scope.range1)};
-        if($scope.range2==null){slider2=50}else{slider2=parseInt($scope.range2)};
-        if($scope.range3==null){slider3=50}else{slider3=parseInt($scope.range3)};
-        if($scope.range4==null){slider4=50}else{slider4=parseInt($scope.range4)};
         
-        $localstorage.setObject('points', {
-            goalscompleted: points.goalscompleted.concat(goals),
-            score1: points.score1.concat(slider1),
-            score2: points.score2.concat(slider2),
-            score3: points.score3.concat(slider3),
-            score4: points.score4.concat(slider4),
-            date: points.date.concat(date)
-        })
-        
-        //TODO: Graph doesn't refresh on first submit of scores - location.reload() solves this but it's ugly and hacky
-        window.location.assign('#/app/graph');
-        location.reload();
     };
     
 })
 
-.controller('GraphCtrl', function ($scope, $localstorage, $ionicModal, $timeout) {
+.controller('GraphCtrl', function ($scope, $ionicModal, $timeout) {
 
     
     // help modal
@@ -116,25 +144,22 @@ angular.module('starter.controllers', [])
             //submit on start1
             $scope.start.hide();
             window.location.assign('#/app/input-score');
-            $localstorage.setObject('tutorial',1);
+            window.localStorage['tutorial'] = 1;
         }else if (index==3){
             //submit on start2
-            //TODO: there's a bug here - index is correct but nothing below here is running - seems to be running index==2 instead
             $scope.start2.hide();
-            //console.log('hidden')
             window.location.assign('#/app/choose-goals');
-            //console.log('window assigned')
-            $localstorage.setObject('tutorial',9);
+            window.localStorage['tutorial'] = 9;
         }
     }
         
     $scope.skip = function(index) {   
              if(index==1){
                 $scope.start.hide();
-                $localstorage.setObject('tutorial',9)
+                window.localStorage['tutorial'] = 9;
             }else if(index==2){
                 $scope.start2.hide();
-                $localstorage.setObject('tutorial',9)
+                window.localStorage['tutorial'] = 9;
             }
         }
 
@@ -226,8 +251,8 @@ angular.module('starter.controllers', [])
             yAxis: 1
         }]
     };
-        var points = $localstorage.getObject('points');
-        var seriesArray = $scope.highchartsNG.series
+        $scope.points = window.localStorage['points'];
+        $scope.seriesArray = $scope.highchartsNG.series
         seriesArray[0].data = points.goalscompleted;
         seriesArray[1].data = points.score1;
         seriesArray[2].data = points.score2;
@@ -239,112 +264,142 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('GoalsCtrl', function($scope, $localstorage, $ionicModal){
-    
+.controller('GoalsCtrl', function($scope, $ionicModal){
     if(window.localStorage['goals'] == null){
-                $localstorage.setObject('goals', [
+                $scope.goals=[
                     { 
+                        id:1,
                         title: 'Get out of bed',
                         description: 'If you achieve this, give yourself a big pat on the back. It\'s the first step to a great day!',
                         focus:0,
                         completed:0
                     },{ 
+                        id:2,
                         title: 'Take a shower or bath',
                         description: 'Having a wash can help you feel better about yourself, and it\'s also a great way to relax.',
                         focus:0,
                         completed:0
                     },{ 
+                        id:3,
                         title: 'Take medication' ,
                         description: 'If your doctor has prescribed you medication, it\'s important to take it',
                         focus:0,
                         completed:0
                     },{ 
+                        id:4,
                         title: 'Eat a healthy meal' ,
                         description: 'If you\'re struggling, ask a friend for help preparing a meal.',
                         focus:0,
                         completed:0
                     },{ 
+                        id:5,
                         title: 'Meditate' ,
                         description: 'Meditation can help you sleep better, focus better and reduce stress. If you find it difficult, start with just a few minutes.',
                         focus:0,
                         completed:0
                     },{ 
+                        id:6,
                         title: 'Go for a walk' ,
                         description: 'Walking releases endorpins, and can give you some time to think and reframe situations more optimistically.',
                         focus:0,
                         completed:0
                     },{ 
+                        id:7,
                         title: 'Write in a journal' ,
                         description: 'Journalling can give you an outlet for feelings, and can help you to find the underlying reasons.',
                         focus:0,
                         completed:0
                     },{ 
+                        id:8,
                         title: 'Do breathing exercises' ,
                         description: 'Breathing deeply gets more oxygen into your body and releases tension, and you can do it anytime or anywhere.',
                         focus:0,
                         completed:0
                     },{ 
+                        id:9,
                         title: 'Listen to relaxing music' ,
                         description: 'If you\'re struggling, ask a friend for help preparing a meal.',
                         focus:0,
                         completed:0
-                    },{ 
-                        title: 'Eat a healthy meal' ,
-                        description: 'Listening to calm, quiet music slows your pulse and heart rate, lowers blood pressure, and decreses levels of stress hormones.',
-                        focus:0,
-                        completed:0
                     }
-                ])
-        };
+                ]
+                
+        window.localStorage['goals'] = JSON.stringify($scope.goals);
+        console.log('goals set');
+        }else{
+            $scope.goals=JSON.parse(window.localStorage['goals']);
+        }
     
-    $scope.goals = $localstorage.getObject('goals');
     
-     // Create and load the Modal
-  $ionicModal.fromTemplateUrl('new-goal.html', function(modal) {
-    $scope.goalModal = modal;
-  }, {
-    scope: $scope,
-    animation: 'slide-in-up'
-  });
+    
+    // new goal modal
+    $ionicModal.fromTemplateUrl('new-goal.html', {
+      id: '1', // id is referenced by openModal()
+      scope: $scope,
+      backdropClickToClose: false,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.goalModal = modal;
+    });
+    
+    // help modal
+    $ionicModal.fromTemplateUrl('templates/choose-goals-help.html', {
+      id: '2',
+      scope: $scope,
+      backdropClickToClose: false,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.help = modal;
+    });
 
-  // Called when the form is submitted
+
+    $scope.openModal = function(index) {
+        if (index==1) $scope.goalModal.show();
+        else if (index == 2) $scope.help.show();
+    };
+    
+    $scope.closeModal = function(index) {
+        console.log(index)
+        if(index == 1) $scope.goalModal.hide()
+        else if (index = 2) $scope.help.hide();
+    }
+    
+    
+  // Called when the new-goal form is submitted
   $scope.creategoal = function(goal) {
     $scope.goals.push({
-      title: goal.title
+        id: $scope.goals.length+1,
+        title: goal.title,
+        description: goal.description,
+        focus: 0,
+        completed: 0,
     });
     $scope.goalModal.hide();
-    goal.title = "";
-  };
-
-  // Open our new goal modal
-  $scope.newgoal = function() {
-    $scope.goalModal.show();
-  };
-
-  // Close the new goal modal
-  $scope.closeNewgoal = function() {
-    $scope.goalModal.hide();
+    console.log($scope.goals);
+    //push this to local storage
+    window.localStorage['goals'] = JSON.stringify($scope.goals);
   };
     
 })
 
 
-.controller('SettingsCtrl', function($scope, $localstorage){
+.controller('SettingsCtrl', function($scope){
     $scope.resetTutorial = function() { 
         if(confirm("Do you want to reset all tutorials?")){
-            $localstorage.setObject('tutorial',0);
+            window.localStorage['tutorial'] = 0;
         }
     }
     $scope.deleteScores = function() { 
         if(confirm("Do you want to delete all logs?")){
-            $localstorage.setObject('points', {
+            $scope.points = {
                     goalscompleted: [],
                     score1: [],
                     score2: [],
                     score3: [],
                     score4: [],
                     date:[]
-                })
+                }
+            window.localStorage['points'] = JSON.stringify($scope.points);
             location.reload();
         }
     }

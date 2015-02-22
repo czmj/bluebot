@@ -30,6 +30,9 @@ a {
     color:                      $energized;
     text-decoration: underline;
 }
+body{
+    background: $stable;
+}
 strong{
     color:                      saturate(lighten($energized,10%),40%);
 }
@@ -60,6 +63,7 @@ $button-energized-active-border:  darken($energized, 10%) !default;
 
 // Checkboxes
 // -------------------------------
+$checkbox-off-bg-color: $stable;
 
 // Items
 // -------------------------------
@@ -82,7 +86,7 @@ $input-color: $light !default;
 
 // Menus
 // -------------------------------
-$menu-bg:                         $stable !default;
+$menu-bg:                       $stable !default;
 
 .menu-left .item{
     border-color:               $dark;

@@ -1,0 +1,14 @@
+<ion-view view-title="Today's goals:">
+    <ion-content>
+        <div ng-controller="GoalsCtrl">
+            <div ng-repeat="goal in goals | filter:{ focus:1} track by goal.id">
+                <a class="item item-icon-right">
+                    {{goal.title}}
+                    <i class="icon ion-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
+    
+
