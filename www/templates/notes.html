@@ -1,0 +1,10 @@
+<ion-view view-title="Notes:" ng-controller="ScoresCtrl">
+    <ion-content>
+        <div ng-repeat="point in points | filter:{notes: '!null'} | orderBy : 'date' : true">
+            <div class="item item-stable item-text-wrap">
+                <h2>{{point.date}}</h2>
+                <p>{{point.notes}}</p>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
