@@ -40,15 +40,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'highcharts-ng', 'ion
 
   .state('app.graph', {
     url: "/graph",
+    cache:false,
     views: {
       'menuContent': {
         templateUrl: "templates/graph.html",
       }
     }
   })
+      .state('app.notes', {
+    url: "/notes",
+    cache:false,
+    views: {
+      'menuContent': {
+        templateUrl: "templates/notes.html"
+      }
+    }
+  })
 
   .state('app.input-score', {
     url: "/input-score",
+    cache:false,
     views: {
       'menuContent': {
         templateUrl: "templates/input-score.html"
@@ -57,6 +68,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'highcharts-ng', 'ion
   })
     .state('app.choose-goals', {
     url: "/choose-goals",
+    cache:false,
     views: {
       'menuContent': {
         templateUrl: "templates/choose-goals.html"
@@ -65,6 +77,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'highcharts-ng', 'ion
   })
       .state('app.complete-goals', {
     url: "/complete-goals",
+    cache:false,
     views: {
       'menuContent': {
         templateUrl: "templates/complete-goals.html"
@@ -73,6 +86,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'highcharts-ng', 'ion
   })
       .state('app.goals', {
     url: "/goals",
+    cache:false,
     views: {
       'menuContent': {
         templateUrl: "templates/goals.html"

@@ -19,8 +19,15 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ScoresCtrl', function($scope, $ionicModal){
-    //have succesfully got to the input page! (somehow)
-    if(window.localStorage['tutorial']==null || window.localStorage['tutorial']==0) window.localStorage['tutorial']=1;
+    if(window.localStorage['points'] == null){
+        $scope.points=[
+            {
+                id:1,
+                notes:null
+            }];
+        window.localStorage['points'] = JSON.stringify($scope.points);
+    }
+    $scope.points=JSON.parse(window.localStorage['points']);
     
     // hints help modal
     $ionicModal.fromTemplateUrl('templates/help.html', {
@@ -41,24 +48,6 @@ angular.module('starter.controllers', [])
     };
     
     $scope.submitScores = function () {
-        //if points does not exist, create an empty object
-        if(window.localStorage['points'] == null){
-                $scope.points={
-                    goalscompleted: [],
-                    score1: [],
-                    score2: [],
-                    score3: [],
-                    score4: [],
-                    date:[]
-                }
-                //push to local storage db
-                window.localStorage['points'] = JSON.stringify($scope.points);
-          
-        }else{
-            //if ponts does exist, load it from the db   
-            $scope.points=JSON.parse(window.localStorage['points']);
-        };
-        
         //generate random goals completed - TODO: get actual goals completed
         $scope.goalscompleted = Math.floor(Math.random()*4);
         
@@ -67,21 +56,26 @@ angular.module('starter.controllers', [])
         if($scope.range2==null){$scope.slider2=50}else{$scope.slider2=parseInt($scope.range2)};
         if($scope.range3==null){$scope.slider3=50}else{$scope.slider3=parseInt($scope.range3)};
         if($scope.range4==null){$scope.slider4=50}else{$scope.slider4=parseInt($scope.range4)};
+        if($scope.notes==null || $scope.notes==""){$scope.notes=null};
         $scope.date = new Date().toUTCString().slice(5, 16);
         
         function pushScores(){
             //add new values to points object
-            $scope.points.goalscompleted.push($scope.goalscompleted);        
-            $scope.points.score1.push($scope.slider1);
-            $scope.points.score2.push($scope.slider2);
-            $scope.points.score3.push($scope.slider3);
-            $scope.points.score4.push($scope.slider4);
-            $scope.points.date.push($scope.date);
+            $scope.points.push({
+                id:  $scope.points.length+1,
+                goalscompleted: $scope.goalscompleted,
+                score1: $scope.slider1,
+                score2: $scope.slider2,
+                score3: $scope.slider3,
+                score4: $scope.slider4,
+                date: $scope.date,
+                notes: $scope.notes
+            })
             
             //save to local storage db
             window.localStorage['points'] = JSON.stringify($scope.points);
             
-            $scope.goals=JSON.parse(window.localStorage['goals']);
+           $scope.goals=JSON.parse(window.localStorage['goals'] || '{}');
             var focusCount=0;
             for (var i=0; i<$scope.goals.length; i++){
                 if ($scope.goals[i].focus===1){
@@ -91,9 +85,8 @@ angular.module('starter.controllers', [])
             if (focusCount>0) window.location.assign('#/app/complete-goals');
             else window.location.assign('#/app/choose-goals');
         }
-        
         //if most recent's entry date==today's date, confirm multiple submits in one day.
-        if ($scope.date===$scope.points.date[$scope.points.date.length-1]){
+        if ($scope.date==$scope.points[$scope.points.length-1].date){
             if(confirm("You have already created one log today. Do you want to create another?")){
                 pushScores();
             }
@@ -329,7 +322,7 @@ angular.module('starter.controllers', [])
         //save to local storage db   
         window.localStorage['goals'] = JSON.stringify($scope.goals);
         }else{
-            $scope.goals=JSON.parse(window.localStorage['goals']);
+            $scope.goals=JSON.parse(window.localStorage['goals'] || '{}');
         }
     
     // called when complete-goals form is submitted
